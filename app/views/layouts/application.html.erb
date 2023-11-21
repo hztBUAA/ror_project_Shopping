@@ -57,7 +57,8 @@
 
       <% if current_user %>
         <span class="navbar-text">Hello <%= current_user.user_name %></span>&nbsp; &nbsp;
-        <%= link_to 'User profile', user_show_path,  class: "btn btn-primary d-flex" %>&nbsp;
+        <%= link_to 'User profile', user_path(current_user),  class: "btn btn-primary d-flex" %>&nbsp;
+        <%= link_to 'Users', user_index_path,  class: "btn btn-primary d-flex" %>&nbsp;
         <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-secondary d-flex" %>
       <% else %>
         <%= link_to 'Login', new_user_session_path, class: "btn btn-primary d-flex" %>&nbsp;
