@@ -41,6 +41,7 @@
           <%= link_to '充值', home_index_path, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
         </div>
       </div>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <% if current_user && current_user.role == "customer" %>
@@ -48,19 +49,27 @@
 <!--            商城就是所有卖家的index  index显示他们的所有商店-->
             <%= link_to '商城', sellers_path, class: "nav-link#{" active" if controller_name == "users"}" %>
           </li>
-            <% elsif current_user && current_user.role == "seller" %>
+
           <li class="nav-item">
 <!--            消息就是模拟交易成功消息 以及各种#待定#的功能   包括确认订单地址~~~~-->
             <%= link_to '消息', home_about_path, class: "nav-link#{" active" if controller_name == "users"}" %>
           </li>
           <li class="nav-item">
 <!--            购物车就是所done = false的order-->
-            <%= link_to '购物车',customer_cart_path(current_user.customer), class: "nav-link#{" active" if controller_name == "users"}" %>
+            <% if current_user.customer %>
+              <%= link_to '购物车', customer_cart_path(current_user.customer), class: "nav-link#{" active" if controller_name == "users"}" %>
+            <% end %>
+            <%#= link_to '购物车',customer_cart_path(current_user.customer), class: "nav-link#{" active" if controller_name == "users"}" %>
           </li>
           <li class="nav-item">
 <!--            我的：  包括余额查询  历史消费    个人资料  包括信息  和修改密码 要独立出来-->
-            <%= link_to '我的', user_show_path, class: "nav-link#{" active" if controller_name == "users"}" %>
+            <%= link_to '我的', user_path(current_user) ,class: "nav-link#{" active" if controller_name == "users"}" %>
           </li>
+          <% elsif current_user && current_user.role == "seller" %>
+            <li class="nav-item">
+              <!--            商城就是所有卖家的index  index显示他们的所有商店-->
+              <%#= link_to '我的店铺', seller_path(current_user.seller), class: "nav-link#{" active" if controller_name == "users"}" %>
+            </li>
           <%end %>
 <!--          #test dropdown-->
 

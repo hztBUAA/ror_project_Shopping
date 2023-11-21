@@ -1,2 +1,12 @@
 <div id="<%= dom_id seller %>">
+<!--  seller的显示-->
+<!--  需要显示的内容：seller的name seller的shops-->
+  <h1><%= seller.name %></h1>
+  <h2>店铺列表</h2>
+  <ul>
+    <% seller.shops.each do |shop| %>
+      <li><%= link_to shop.name, seller_shop_path(seller,shop) %></li>
+    <% end %>
+  </ul>
+  <%#= link_to '返回', sellers_path %>
 </div>

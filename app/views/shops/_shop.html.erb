@@ -1,2 +1,14 @@
 <div id="<%= dom_id shop %>">
+<!--显示店铺的所有商品commodity-->
+  <h1><%= shop.name %></h1>
+<!--  TODO:shop是怎么传进来的？-->
+  <h2>小店商品</h2>
+  <ul>
+    <% shop.commodities.each do |commodity| %>
+      <li><%= link_to commodity.name, commodity_path(commodity) %></li>
+    <% end %>
+  </ul>
+  <%#= link_to '返回', sellers_path %>
+<%#= render :partial => "commodities/commodity", :collection => shop.commodities %>
+<!--  这个是怎么确定commodity的？-->
 </div>

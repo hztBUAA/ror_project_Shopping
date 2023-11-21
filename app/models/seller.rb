@@ -1,3 +1,3 @@
 class Seller < ApplicationRecord
-  has_many :shop,dependent: :delete_all
+  has_many :shops,dependent: :delete_all
 end

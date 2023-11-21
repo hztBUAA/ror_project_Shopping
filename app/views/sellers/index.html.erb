@@ -2,6 +2,8 @@
 
 <h1>Sellers</h1>
 
+<!--商城是由所有的seller组成的， 应该支持小店的图片显示-->
+
 <div id="sellers">
   <% @sellers.each do |seller| %>
     <%= render seller %>
@@ -11,4 +13,8 @@
   <% end %>
 </div>
 
-<%= link_to "New seller", new_seller_path %>
+
+
+
+
+<%#= link_to "New seller", new_seller_path %>
