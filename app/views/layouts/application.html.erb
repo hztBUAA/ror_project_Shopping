@@ -45,11 +45,11 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <%= link_to '购物车', sellers_path, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
               <li class="dropdown-divider"></li>
-<!--              <%#= link_to '购物记录', customer_records_url(current_user.customer), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>-->
-<!--              <li class="dropdown-divider"></li>-->
-<!--              <%#= link_to '我的诉求', complaints_url, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>-->
-<!--              <li class="dropdown-divider"></li>-->
-<!--              <%#= link_to '充值', account_top_up_url(current_), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>-->
+              <%= link_to '购物记录', home_index_path, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              <li class="dropdown-divider"></li>
+              <%= link_to '我的诉求', home_index_path, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              <li class="dropdown-divider"></li>
+              <%= link_to '充值', home_index_path, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
             </div>
           </div>
         </ul>
@@ -57,7 +57,7 @@
 
       <% if current_user %>
         <span class="navbar-text">Hello <%= current_user.user_name %></span>&nbsp; &nbsp;
-        <%= link_to 'User profile', users_show_path,  class: "btn btn-primary d-flex" %>&nbsp;
+        <%= link_to 'User profile', user_show_path,  class: "btn btn-primary d-flex" %>&nbsp;
         <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-secondary d-flex" %>
       <% else %>
         <%= link_to 'Login', new_user_session_path, class: "btn btn-primary d-flex" %>&nbsp;

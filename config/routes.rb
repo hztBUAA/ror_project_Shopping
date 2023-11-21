@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'user/show'
-  get 'user/index'
+  get 'user/show',as: "user_show"
+  get 'user/index',as: 'users_index'
   resources :carts
   root to: "home#index"
   get 'home/index'
