@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'user/show'
+  get 'user/index'
   resources :carts
   root to: "home#index"
   get 'home/index'
