@@ -1,14 +1,25 @@
 Rails.application.routes.draw do
+  resources :carts
   root to: "home#index"
   get 'home/index'
   get 'home/about'
   devise_for :users
   resources :orders
   resources :commodities
-  resources :shops
+  resources :sellers do
+    resources :shops
+  end
+  resources :customers do
+    resource :cart do
+      resources :orders do
+        post 'purchase'
+      end
+    end
+    #resources :records
+  end
+
   resources :categories
   resources :admins
-  resources :sellers
   resources :customers
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

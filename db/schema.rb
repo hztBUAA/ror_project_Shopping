@@ -10,12 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_21_111256) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_21_125726) do
   create_table "admins", force: :cascade do |t|
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_admins_on_user_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_carts_on_customer_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -40,6 +47,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_111256) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "cart_id"
+    t.index ["cart_id"], name: "index_customers_on_cart_id"
     t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
@@ -88,8 +97,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_111256) do
   end
 
   add_foreign_key "admins", "users"
+  add_foreign_key "carts", "customers"
   add_foreign_key "commodities", "categories", column: "categories_id"
   add_foreign_key "commodities", "shops"
+  add_foreign_key "customers", "carts"
   add_foreign_key "customers", "users"
   add_foreign_key "orders", "commodities"
   add_foreign_key "orders", "customers"

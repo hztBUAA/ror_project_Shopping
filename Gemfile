@@ -1,6 +1,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+
+gem "sassc-rails"
+gem "bootstrap"
 ruby "3.2.2"
 
 gem "devise"

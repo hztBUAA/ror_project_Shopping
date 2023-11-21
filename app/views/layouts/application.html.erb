@@ -1,18 +1,129 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>App</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Blog4</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+<div class="container">
 
-  <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-    <%= yield %>
-  </body>
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">购物商城</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+<!--            商城就是所有卖家的index  index显示他们的所有商店-->
+            <%= link_to '商城', sellers_path, class: "nav-link#{" active" if controller_name == "users"}" %>
+          </li>
+          <li class="nav-item">
+<!--            消息就是模拟交易成功消息 以及各种#待定#的功能   包括确认订单地址~~~~-->
+            <%= link_to '消息', home_about_path, class: "nav-link#{" active" if controller_name == "users"}" %>
+          </li>
+          <li class="nav-item">
+<!--            购物车就是所done = false的order-->
+            <%= link_to '购物车', , class: "nav-link#{" active" if controller_name == "users"}" %>
+          </li>
+          <li class="nav-item">
+<!--            我的：  包括余额查询  历史消费    个人资料  包括信息  和修改密码 要独立出来-->
+            <%= link_to '我的', blogs_path, class: "nav-link#{" active" if controller_name == "users"}" %>
+          </li>
+<!--          #test dropdown-->
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <%= link_to '购物车', sellers_path, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              <li class="dropdown-divider"></li>
+              <%= link_to '购物记录', customer_records_url(current_account.customer), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              <li class="dropdown-divider"></li>
+              <%= link_to '我的诉求', complaints_url, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              <li class="dropdown-divider"></li>
+              <%= link_to '充值', account_top_up_url(current_account), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+            </div>
+          </div>
+        </ul>
+      </div >
+<!--      ##########################################-->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <% if current_account.role == "Customer" %>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <%= link_to '购物车', customer_orders_url(current_account.customer), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '购物记录', customer_records_url(current_account.customer), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '我的诉求', complaints_url, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '充值', account_top_up_url(current_account), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              </div>
+            </div>
+          <% elsif current_account.role == "Seller" %>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <%= link_to '所有投诉', complaints_url, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '统计', account_statistic_url(current_account), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '充值', account_top_up_url(current_account), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              </div>
+            </div>
+          <% elsif current_account.role == "Admin" %>
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <%= link_to '所有账户', accounts_url, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '所有分类', categories_url, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '所有投诉', complaints_url, class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '统计', account_statistic_url(current_account), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+                <li class="dropdown-divider"></li>
+                <%= link_to '充值', account_top_up_url(current_account), class: "dropdown-item", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only">(current)</span>
+              </div>
+            </div>
+          <% end %>
+
+
+
+<!--      ##########################################-->
+      <% if current_user %>
+        <span class="navbar-text">Hello <%= current_user.user_name %></span>&nbsp; &nbsp;
+        <%= link_to 'User profile', users_show_path,  class: "btn btn-primary d-flex" %>&nbsp;
+        <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-secondary d-flex" %>
+      <% else %>
+        <%= link_to 'Login', new_user_session_path, class: "btn btn-primary d-flex" %>&nbsp;
+        <%= link_to 'Sign up', new_user_registration_path, class: "btn btn-secondary d-flex" %>
+      <% end %>
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="col">
+      <%= yield %>
+    </div>
+  </div>
+
+  <footer class="py-5">
+    <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+      <p>Copyright hzt &copy; 2023. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+</body>
 </html>
