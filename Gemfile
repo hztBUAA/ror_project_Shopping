@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 gem "sassc-rails"
 gem "bootstrap"
