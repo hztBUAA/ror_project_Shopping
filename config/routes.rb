@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'home/about'
   devise_for :users
-  resources :orders
   resources :commodities
   resources :sellers do
     resources :shops
