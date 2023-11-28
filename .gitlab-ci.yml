@@ -1,8 +1,8 @@
 deploy-project:
   stage: deploy
+  before_script:
+    - cd project
   script:
-    - ./project /
-    - cd /project
     - bundle install
     - rails db:migrate
     - sv restart project
