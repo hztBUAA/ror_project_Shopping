@@ -19,6 +19,8 @@
             商品: <%= order.commodity.commodity_name %>
             <br>
             数量: <%= order.count %>
+<br>
+            订单状态：<%=order.done == true ? "已支付" :  "未支付"%>
           </li>
         <% end %>
       </ul>

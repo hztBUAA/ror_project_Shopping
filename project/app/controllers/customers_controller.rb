@@ -5,6 +5,19 @@ class CustomersController < ApplicationController
   before_action :set_balance,only: %i[ purchase ]
 
 
+  def recharge
+    @customer = current_user.customer
+  end
+
+  def process_recharge
+    @customer = current_user.customer
+    amount = params[:amount].to_f
+    @user = current_user
+    # 执行充值逻辑，例如更新余额
+    @user.update(balance: @user.balance + amount)
+
+    redirect_to customers_commodities_path, notice: '充值成功！'
+  end
   # GET /customers or /customers.json
     def purchase
       @order = Order.new

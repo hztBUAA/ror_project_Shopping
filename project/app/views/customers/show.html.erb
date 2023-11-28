@@ -37,10 +37,14 @@
   </ul>
 
   <div class="card-footer">
+    <% if current_admin? %>
 <!--    <%#= link_to "编辑信息", edit_customer_path(@customer), class: "btn btn-primary mr-2" %> |-->
     <%= link_to "返回顾客列表", customers_path, class: "btn btn-secondary mr-2" %>
 <!--<hr/>-->
     <%= link_to "注销顾客", @customer, method: :delete, data: { confirm: "确定要删除该顾客吗？" }, class: "btn btn-danger" %>
+  <%end %>
+    <%= link_to "返回", :back ,class:  "btn btn-secondary"%>
   </div>
+
 
 </div>

@@ -11,8 +11,14 @@ Rails.application.routes.draw do
       resources :commodities
     end
   end
-  resources :customers do
+  resources :customers , except: [:edit, :update] do
     get 'purchase/:commodity_id', to: "customers#purchase", as: :purchase
+    resource :addresses do
+    end
+    member do
+      get 'recharge' # 充值页面
+      post 'process_recharge' # 处理充值请求
+    end
     resource :cart do
     end
     resources :orders do

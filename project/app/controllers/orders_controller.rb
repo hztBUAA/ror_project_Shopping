@@ -37,7 +37,17 @@ class OrdersController < ApplicationController
     # debugger
     @customer = current_user.customer
     @order = Order.new(order_params)
-    @order.address = Address.find(params[:order][:address_id])
+    # @order.address = Address.find(params[:order][:address_id])
+    # Check if the address_id is provided in the params
+    if params[:order][:address_id].present?
+      @order.address = Address.find(params[:order][:address_id])
+    else
+      # If address_id is not provided, create a new address based on the form data
+      @address = Address.new(address_params)
+      @address.customer = @customer
+      @address.save
+      @order.address = @address
+    end
     @order.count =  params[:order][:count]
     @order.commodity = Commodity.find(params[:order][:commodity_id])
     @order.customer = Customer.find(params[:order][:customer_id])
@@ -97,6 +107,9 @@ class OrdersController < ApplicationController
       format.html { redirect_to customer_orders_path(@customer), notice: "订单删除成功！" }
       format.json { head :no_content }
     end
+  end
+  def address_params
+    params.require(:order).require(:address).permit(:street, :city, :country, :house_address, :phone_number, :greeting_name)
   end
 
   def order_params

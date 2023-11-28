@@ -82,5 +82,16 @@ h5 {
 .clickable:active {
   transform: translateY(2px);
 }
+/* Add this to your CSS file or style tag */
+.navbar-text {
+  font-weight: bold;
+  color: #333; /* Customize the color */
+}
+
+.btn-navbar {
+  transition: transform 0.2s ease-in-out; /* Add a smooth transition effect */
+}
+
+/* Optional: Add more styles as needed */
 
 

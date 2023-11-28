@@ -20,19 +20,39 @@
   <% else %>
     <!-- 如果没有地址，显示地址表单 -->
     <%= form.fields_for :address, Address.new do |address_fields| %>
+
       <div class="form-group">
-        <%= address_fields.label :street %>
-        <%= address_fields.text_field :street, class: "form-control" %>
+        <%= address_fields.label :country, class: "control-label" %>
+        <%= address_fields.text_field :country, class: "form-control", placeholder: "国家" %>
+      </div>
+      <div class="form-group">
+        <%= address_fields.label :city, class: "control-label" %>
+        <%= address_fields.text_field :city, class: "form-control", placeholder: "城市" %>
+      </div>
+      <div class="form-group">
+        <%= address_fields.label :house_address, class: "control-label" %>
+        <%= address_fields.text_field :house_address, class: "form-control", placeholder: "具体地址" %>
       </div>
 
-      <!-- 其他地址字段，以类似的方式添加 Bootstrap 样式 -->
+      <div class="form-group">
+        <%= address_fields.label :phone_number, class: "control-label" %>
+        <%= address_fields.text_field :phone_number, class: "form-control", placeholder: "联系电话" %>
+      </div>
+
+      <div class="form-group">
+        <%= address_fields.label :greeting_name, class: "control-label" %>
+        <%= address_fields.text_field :greeting_name, class: "form-control", placeholder: "收货人称呼" %>
+      </div>
+
+      <!-- 其他地址字段，按照需要添加 -->
+
     <% end %>
   <% end %>
 
 
   <div class="mb-3">
     <%= form.label :count , class: "form-label"%>
-    <%= form.number_field :count , class: "form-control", id: "countField"%>
+    <%= form.number_field :count , class: "form-control", id: "countField",placeholder: "购买数量"%>
   </div>
 
   <div class="mb-3">
