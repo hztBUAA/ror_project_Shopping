@@ -6,15 +6,15 @@
     <div class="row no-gutters">
       <!-- 左侧：用户头像 -->
       <div class="col-md-4">
-        <% if current_user.image.attached? %>
-          <%= image_tag current_user.image, alt: "User Image", class: "card-img rounded-circle", style: "max-width: 100px; max-height: 100px;" %>
+        <% if @customer.image.attached? %>
+          <%= image_tag @customer.image, alt: "User Image", class: "card-img rounded-circle", style: "max-width: 100px; max-height: 100px;" %>
         <% end %>
       </div>
       <!-- 右侧：用户信息 -->
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title">用户名: <%= current_user.user_name %></h5>
-          <p class="card-text">身份: <%= current_user.role %></p>
+          <h5 class="card-title">用户名: <%= @customer.user_name %></h5>
+          <p class="card-text">身份: <%= @customer.role %></p>
         </div>
       </div>
     </div>
