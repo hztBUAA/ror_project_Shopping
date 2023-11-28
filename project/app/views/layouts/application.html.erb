@@ -80,6 +80,7 @@
           <%end %>
 
         </ul>
+        <%if current_customer? %>
         <div class="dropdown">
           <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             我的
@@ -91,6 +92,7 @@
             <li><%= link_to '充值', recharge_customer_path(current_user.id), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
           </ul>
         </div>
+          <%end %>
       </div >
       <% if current_user %>
         <span class="navbar-text">Hello <%= current_user.user_name %></span>&nbsp;
