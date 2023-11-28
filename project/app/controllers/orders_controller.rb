@@ -69,15 +69,15 @@ class OrdersController < ApplicationController
         # redirect_to "home/index"
       else
         if @commodity.count<1
-          redirect_to customers_commodities_path, notice: "购买失败！商品已经被人抢光啦！."
+          redirect_to customers_commodities_path, notice: "购买失败！商品已经被人抢光啦！." and return
         else
-          redirect_to customers_commodities_path, notice: "余额不足！"
+          redirect_to customers_commodities_path, notice: "余额不足！" and return
         end
       end
     end
     respond_to do |format|
       if @order.save
-        format.html { redirect_to customers_commodities_path(@customer), notice: @order.done ? "支付成功！" : "订单创建成功，可在购物车中查询您的宝贝。" }
+        format.html { redirect_to customers_commodities_path(@customer), notice: @order.done ? "支付成功！" : "订单创建成功，可在购物车中查询您的宝贝。" and return}
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new, status: :unprocessable_entity }
