@@ -17,7 +17,7 @@ class ShopsController < ApplicationController
     # new函数的跳转逻辑 是先到new方法？吗
     @seller = current_user.seller
     unless @seller
-      redirect_to home_index_path,notice:" seller is  nil"
+      redirect_to home_index_path,notice:" you are not a seller"
     end
     @shop = Shop.new
     @shop.seller_id = @seller.id
@@ -63,7 +63,7 @@ class ShopsController < ApplicationController
   def destroy
 
 
-    if @shop.commodities.destroy_all
+    if @shop.commodities.destroy_all && @shop.destroy
       redirect_to seller_shops_path(@seller), notice: "超市删除成功！"
     else
       redirect_to seller_shops_path(@seller), notice: "超市删除失败，请将超市内商品下架后并与对应订单顾客联系或者和管理员联系！"
