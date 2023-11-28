@@ -61,9 +61,20 @@ class ShopsController < ApplicationController
 
   # DELETE /shops/1 or /shops/1.json
   def destroy
-
-
-    if @shop.commodities.destroy_all && @shop.destroy
+      begin
+        # 尝试删除商店
+        @shop.destroy
+        flash[:notice] = 'Shop was successfully destroyed.'
+      rescue ActiveRecord::InvalidForeignKey => e
+        # 捕捉外键约束异常并进行重定向
+        # flash[:alert] = "Error: #{e.message}"
+        redirect_to seller_shops_path(@seller), notice: "超市删除失败，请将超市内商品下架后并与对应订单顾客联系或者和管理员联系！"and return
+      end
+    # 手动删除关联的订单
+    @shop.commodities.each do |commodity|
+      commodity.orders.destroy_all
+    end
+    if @shop.destroy
       redirect_to seller_shops_path(@seller), notice: "超市删除成功！"
     else
       redirect_to seller_shops_path(@seller), notice: "超市删除失败，请将超市内商品下架后并与对应订单顾客联系或者和管理员联系！"
