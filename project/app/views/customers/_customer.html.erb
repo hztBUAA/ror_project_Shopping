@@ -1,0 +1,28 @@
+<div id="<%= dom_id customer %>">
+  <!-- app/views/customers/show.html.erb -->
+
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">顾客ID: <%= customer.id %></h6>
+      <h6 class="card-subtitle mb-2 text-muted">顾客名字: <%= customer.user.user_name %></h6>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-header">
+        所有订单
+      </div>
+      <ul class="list-group list-group-flush">
+        <% customer.orders.each do |order| %>
+          <li class="list-group-item">
+            订单ID: <%= order.id %>
+            <br>
+            商品: <%= order.commodity.commodity_name %>
+            <br>
+            数量: <%= order.count %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,26 @@
+.form-control-textarea {
+    height: 10em; /* 调整为你想要的高度 */
+    /* 可以添加其他样式，比如边框、内边距等 */
+}
+
+
+/*展示shop的flex卡片布局*/
+.commodities-container {
+    display: flex;
+    flex-wrap: wrap;  /* 允许超过容器宽度时换行 */
+}
+
+.commodities-container ul {
+    list-style: none;  /* 移除列表样式 */
+    padding: 0;  /* 移除默认内边距 */
+    display: flex;
+    flex-wrap: wrap;  /* 允许超过容器宽度时换行 */
+}
+
+.commodities-container li {
+    margin: 0 10px 10px 0;  /* 调整超市之间的间距 */
+}
+.commodity-item {
+    margin: 0 10px 10px 0;  /* 调整 shop 之间的间距 */
+    flex: 1;  /* 平均分配宽度，填充整个容器 */
+}

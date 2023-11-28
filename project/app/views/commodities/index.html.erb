@@ -1,0 +1,17 @@
+
+<h1>商品列表</h1>
+
+<div id="commodities">
+  <% @commodities.each do |commodity| %>
+    <%= render commodity %>
+    <%#= link_to "Show this commodity", seller_shop_commodity_path(@seller,@shop,commodity) ,class: "btn btn-primary"%>
+  <% end %>
+</div>
+<hr/>
+<% if current_seller?%>
+<%= link_to "新增商品", new_seller_shop_commodity_path(@seller,@shop) ,class: "btn btn-primary"%>
+<%= link_to "返回", seller_shops_path(@seller),class: "btn btn-secondary" %>
+<%elsif current_customer?%>
+  <%#= link_to "新增商品", new_seller_shop_commodity_path(@seller,@shop) ,class: "btn btn-primary"%>
+  <%= link_to "返回", customers_commodities_path,class: "btn btn-secondary" %>
+<%end %>

@@ -1,0 +1,13 @@
+<div class="card mt-3">
+  <div class="card-header">
+    编辑顾客信息
+  </div>
+  <div class="card-body">
+    <%= render "form", customer: @customer %>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to "查看该顾客", @customer, class: "btn btn-secondary" %> |
+    <%= link_to "返回顾客列表", customers_path, class: "btn btn-secondary" %>
+  </div>
+</div>

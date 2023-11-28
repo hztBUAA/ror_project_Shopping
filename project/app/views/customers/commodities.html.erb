@@ -1,0 +1,10 @@
+<%= stylesheet_link_tag 'commodity' %>
+<div class="commodities-container">
+  <ul>
+    <% @commodities.each do |commodity| %>
+      <div class="commodities-item">
+        <%= render 'commodities/commodity', commodity: commodity%>
+      </div>
+    <% end %>
+  </ul>
+</div>

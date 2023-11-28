@@ -1,0 +1,21 @@
+<!-- app/views/admin/commodities.html.erb -->
+
+<h1>商品列表</h1>
+
+<div class="card-deck">
+  <% @commodities.each do |commodity| %>
+    <div class="card">
+      <!-- 商品图片 -->
+      <%= image_tag commodity.image, class: "card-img-top" if commodity.image.attached? %>
+
+      <div class="card-body">
+        <h5 class="card-title"><%= commodity.commodity_name %></h5>
+        <p class="card-text">价格: <%= commodity.price %></p>
+        <p class="card-text">库存: <%= commodity.count %></p>
+        <!-- 其他商品信息... -->
+      </div>
+    </div>
+  <% end %>
+</div>
+<hr/>
+<%= link_to "新增可上市商品类别", new_category_path,class: "btn btn-primary" %>

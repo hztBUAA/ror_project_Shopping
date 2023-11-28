@@ -1,0 +1,22 @@
+<% stylesheet_link_tag "shop" %>
+<div id="<%= dom_id shop %>">
+  <div class="card" style="width: 18rem;display: flex">
+    <div class="card-body">
+      <h4 class="card-title clickable" onclick="window.location='<%= seller_shop_path(shop.seller,shop) %>'"><%= shop.shop_name %></h4>
+      <h5 class="card-subtitle mb-2 text-body-secondary"><%= shop.info %></h5>
+    </div>
+  </div>
+
+</div>
+<!--显示店铺的所有商品commodity-->
+<!--  <h3><%#= shop.shop_name %></h3>-->
+<!--  TODO:shop是怎么传进来的？-->
+<!--  <h4>小店商品</h4>-->
+<!--  <ul>-->
+<%# shop.commodities.each do |commodity| %>
+<!--      <li><%#= link_to commodity.name, commodity_path(commodity) %></li>-->
+<%# end %>
+<!--  </ul>-->
+<%#= link_to '返回', sellers_path %>
+<%#= render :partial => "commodities/commodity", :collection => shop.commodities %>
+<!--  这个是怎么确定commodity的？-->

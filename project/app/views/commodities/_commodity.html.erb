@@ -1,0 +1,24 @@
+
+<div id="<%= dom_id commodity %>">
+<!--  显示商品的信息-->
+    <div class="card" style="width: 18rem;display: flex"  >
+      <div class="card-body" >
+        <h4 class="card-title clickable" onclick="window.location='<%= seller_shop_commodity_path(commodity.seller,commodity.shop,commodity) %>'"><%= commodity.commodity_name %></h4>
+        <div>
+          <% if commodity.image.attached? %>
+            <%= image_tag commodity.image, style: 'max-width: 100%; height: auto;margin: 1px' %>
+          <% end %>
+        </div>
+        <hr/>
+        <h5 class="card-subtitle mb-2 text-body-secondary"><strong>商品简介</strong>：<%= commodity.info %></h5>
+        <h6 class="card-text"><strong>价格</strong>：￥<%= commodity.price %></h6>
+        <h6 class="card-text"><strong>库存</strong>：<%= commodity.count %></h6>
+        <%if current_customer? %>
+        <%=link_to "加入购物车", new_customer_order_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:false),class: "btn btn-primary"%>
+        <%=link_to "购买", customer_purchase_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:true),class: "btn btn-primary"%>
+      <%end %>
+      </div>
+    </div>
+
+
+</div>

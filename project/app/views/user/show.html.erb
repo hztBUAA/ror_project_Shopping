@@ -1,0 +1,51 @@
+<h2>个人简介</h2>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row no-gutters">
+      <!-- 左侧：用户头像 -->
+      <div class="col-md-4">
+        <% if current_user.image.attached? %>
+          <%= image_tag current_user.image, alt: "User Image", class: "card-img rounded-circle", style: "max-width: 100px; max-height: 100px;" %>
+        <% end %>
+      </div>
+      <!-- 右侧：用户信息 -->
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">用户名: <%= @user.user_name %></h5>
+          <p class="card-text">身份: <%= @user.role %></p>
+        </div>
+      </div>
+    </div>
+    <!-- 添加其他用户信息字段 -->
+    <% if @user.role == "customer" %>
+      <h6 class="card-subtitle mb-2 text-muted">订单信息:</h6>
+      <ul class="list-group">
+        <% @user.customer.orders.each do |order| %>
+          <li class="list-group-item">
+            订单ID: <%= order.id %>
+            <br>
+            商品: <%= order.commodity.commodity_name %>
+            <br>
+            数量: <%= order.count %>
+          </li>
+        <% end %>
+      </ul>
+    <%elsif @user.role == "seller"%>
+      <h6 class="card-subtitle mb-2 text-muted">商店信息:</h6>
+      <ul class="list-group">
+        <% @user.seller.shops.each do |shop| %>
+          <li class="list-group-item">
+            商店名称: <%= shop.shop_name %>
+            <br>
+            商店简介: <%= shop.info %>
+          </li>
+        <% end %>
+      </ul>
+    <%elsif @user.role == "admin"%>
+      <h5>你拥有很多权力！</h5>
+    <%end %>
+  </div>
+</div>
+
+<%= link_to "编辑个人信息", edit_user_registration_url(@user), class: "btn btn-primary mt-3" %>

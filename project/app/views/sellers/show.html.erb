@@ -1,0 +1,38 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <h3>商家ID: <%= @seller.id %></h3>
+  </div>
+  <div class="card-body">
+<!--    <h5 class="card-title">店铺名称: <%#= @seller.shop_name %></h5>-->
+<!--    <h6 class="card-subtitle mb-2 text-muted">商家ID: <%#= @seller.id %></h6>-->
+    <% if @seller.shops.empty? %>
+      <h6>该商家暂无店铺</h6>
+    <% else %>
+      <ul class="list-group">
+        <% @seller.shops.each do |shop| %>
+          <li class="list-group-item">
+            <h6 class="mb-1">店铺名称: <%= shop.shop_name %></h6>
+            <% if shop.commodities.empty? %>
+              <p class="mb-1">该店铺暂无商品</p>
+            <% else %>
+              <ul class="list-group list-group-flush">
+                <% shop.commodities.each do |commodity| %>
+                  <li class="list-group-item">
+                    <strong>商品: <%= commodity.commodity_name %></strong>
+                    <br>
+                    价格: <%= commodity.price %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <div class="card-footer">
+    <%= link_to "返回商家列表", sellers_path, class: "btn btn-secondary mr-2" %>
+    <%= link_to "注销商家", @seller, method: :delete, data: { confirm: "确定要删除该商家吗？" }, class: "btn btn-danger" %>
+  </div>
+</div>

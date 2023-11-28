@@ -1,0 +1,65 @@
+<%#= form_with(model: shop) do |form| %>
+  <%# if shop.errors.any? %>
+<!--    <div style="color: red">-->
+<!--      <h2><%#= pluralize(shop.errors.count, "error") %> prohibited this shop from being saved:</h2>-->
+
+<!--      <ul>-->
+        <%# shop.errors.each do |error| %>
+<!--          <li><%#= error.full_message %></li>-->
+        <%# end %>
+<!--      </ul>-->
+<!--    </div>-->
+  <%# end %>
+
+<!--  <div>-->
+    <%#= form.submit %>
+<!--  </div>-->
+<%# end %>
+
+
+<%#= form_with(model: [@seller, @shop]) do |form| %>
+  <%# if @shop.errors.any? %>
+<!--    <div style="color: red">-->
+<!--      <h2><%#= pluralize(@shop.errors.count, "error") %> prohibited this shop from being saved:</h2>-->
+<!--      <ul>-->
+        <%# @shop.errors.full_messages.each do |message| %>
+<!--          <li><%#= message %></li>-->
+        <%# end %>
+<!--      </ul>-->
+<!--    </div>-->
+  <%# end %>
+<%# if @shop.new_record? %>
+  <%#= form_with(model: [@seller, @shop], url: seller_shops_path(current_user.seller.id)) do |form| %>
+  <%# else %>
+    <%#= form_with(model: [@seller, @shop], url: seller_shop_path(@seller, @shop), method: :patch) do |form| %>
+    <%# end %>
+  <!-- 表单字段等 -->
+
+<%# end %>
+<%= stylesheet_link_tag 'shop' %>
+<%= form_with(model: [@seller, @shop], url: @shop.new_record? ? seller_shops_path(current_user.seller.id) : seller_shop_path(@seller, @shop), method: @shop.new_record? ? :post : :patch) do |form| %>
+<%#= form_with(model: [@seller, @shop], url: seller_shops_path(current_user.seller.id)) do |form| %>
+  <% if @shop.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@shop.errors.count, "error") %> prohibited this shop from being saved:</h2>
+      <ul>
+        <% @shop.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :shop_name , class: "form-label"%>
+    <%= form.text_field :shop_name , class: "form-control"%>
+  </div>
+  <div class="mb-3">
+    <%= form.label :info , class: "form-label"%>
+    <%= form.text_area :info , class: "form-control form-control-textarea"%>
+  </div>
+    <div class="mb-3">
+    <%= form.submit "确认", class: "btn btn-primary" %>
+    </div>
+  <!-- 表单字段等 -->
+  <% end %>

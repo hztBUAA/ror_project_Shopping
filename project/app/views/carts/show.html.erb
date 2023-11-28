@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @cart %>
+
+<div>
+  <%= link_to "编辑", edit_customer_cart_path(@customer) ,class: "btn btn-primary"%>
+  <%#= link_to "Back to carts", carts_path %>
+<hr/>
+  <%#= button_to "清空购物车", customer_cart_path(@customer,@cart), method: :delete,class: "btn btn-secondary" %>
+</div>

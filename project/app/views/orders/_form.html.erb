@@ -1,0 +1,76 @@
+<%= form_with(model: order,url: customer_orders_path(@customer), method: :post) do |form| %>
+  <% if order.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% order.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_customer? && current_user.customer.addresses.present? %>
+    <!-- 如果有地址，显示下拉列表 -->
+    <div class="form-group">
+      <%= form.label :address, "选择地址" %>
+      <%= form.collection_select(:address_id, current_user.customer.addresses, :id, :full_address, { prompt: "请选择地址" }, class: "form-control") %>
+    </div>
+  <% else %>
+    <!-- 如果没有地址，显示地址表单 -->
+    <%= form.fields_for :address, Address.new do |address_fields| %>
+      <div class="form-group">
+        <%= address_fields.label :street %>
+        <%= address_fields.text_field :street, class: "form-control" %>
+      </div>
+
+      <!-- 其他地址字段，以类似的方式添加 Bootstrap 样式 -->
+    <% end %>
+  <% end %>
+
+
+  <div class="mb-3">
+    <%= form.label :count , class: "form-label"%>
+    <%= form.number_field :count , class: "form-control", id: "countField"%>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :price , class: "form-label"%>
+    <%= form.text_field :price , class: "form-control form-control-textarea", id: "displayTotalPrice", disabled: true, data: { price: @price } %>
+  </div>
+
+
+  <%= form.hidden_field :customer_id, value: params[:customer_id] %>
+  <%= form.hidden_field :commodity_id, value: params[:commodity_id] %>
+  <%= form.hidden_field :done, value: params[:done] %>
+<!--  <div class="mb-3">加一个备注-->
+    <%#= form.label :info , class: "form-label"%>
+    <%#= form.text_area :info , class: "form-control form-control-textarea"%>
+<!--  </div>-->
+
+  <div>
+    <%= form.submit "确认", class: "btn btn-primary"%>
+  </div>
+<% end %>
+
+<script>
+    // 获取count和price字段的元素
+    let countField = document.getElementById('countField');
+
+    // 获取用于显示的元素
+    let displayTotalPrice = document.getElementById('displayTotalPrice');
+
+    // 添加事件监听器
+    countField.addEventListener('input', updateTotal);
+
+    // 更新总价显示
+    function updateTotal() {
+        let count = parseInt(countField.value) || 0; // 确保输入是数字
+        let price = parseFloat(displayTotalPrice.dataset.price) || 0;
+        // 计算总价
+        let total = count * price;
+        // 更新显示
+        displayTotalPrice.textContent = total.toFixed(2); // 保留两位小数
+    }
+</script>

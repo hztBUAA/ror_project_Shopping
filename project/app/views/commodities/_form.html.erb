@@ -1,0 +1,53 @@
+<%= form_with(model: [@seller, @shop, @commodity], url: (@commodity.persisted? ? seller_shop_commodity_path(@seller, @shop, @commodity) : seller_shop_commodities_path(@seller, @shop))) do |form| %>
+  <% if @commodity.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@commodity.errors.count, "error") %> prohibited this commodity from being saved:</h2>
+
+      <ul>
+        <% @commodity.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+  <div class="mb-3">
+    <%= form.label :commodity_name , class: "form-label"%>
+    <%= form.text_field :commodity_name , class: "form-control"%>
+  </div>
+  <div class="mb-3">
+    <%= form.label :category_id, class: "form-label" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "请选择商品种类" }, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :count, class: "form-label" %>
+    <%= form.number_field :count, class: "form-control", in: 0..100, step: 1 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :price , class: "form-label"%>
+    <%= form.text_field :price , class: "form-control form-control-textarea"%>
+  </div>
+  <div class="mb-3">
+    <%= form.label :info , class: "form-label"%>
+    <%= form.text_area :info , class: "form-control form-control-textarea"%>
+  </div>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+
+<!--  <div class="mb-3">-->
+    <%#= form.label  , class: "form-label"%>
+    <%#= form.text_area :info , class: "form-control form-control-textarea"%>
+<!--  </div>-->
+  <hr/>
+  <div class="mb-3">
+    <%= form.submit "创建", class: "btn btn-primary" %>
+    <%= link_to "取消",seller_shop_path(@seller,@shop) ,class: "btn btn-secondary" %>
+  </div>
+<% end %>

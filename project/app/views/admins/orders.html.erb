@@ -1,0 +1,17 @@
+<!-- app/views/admin/orders.html.erb -->
+
+<h1>订单列表</h1>
+
+<div class="card-deck">
+  <% @orders.each do |order| %>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">订单编号: <%= order.id %></h5>
+        <p class="card-text">顾客: <%= order.customer.user.user_name %></p>
+        <p class="card-text">商品: <%= order.commodity.commodity_name %></p>
+        <p class="card-text">数量: <%= order.count %></p>
+        <!-- 其他订单信息... -->
+      </div>
+    </div>
+  <% end %>
+</div>
