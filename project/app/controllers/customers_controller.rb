@@ -34,6 +34,7 @@ class CustomersController < ApplicationController
 
   # GET /customers/1 or /customers/1.json
   def show
+    @customer = Customer.find(params[:id])
   end
 
   # GET /customers/new
