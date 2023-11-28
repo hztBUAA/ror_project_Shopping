@@ -1,7 +1,7 @@
 deploy-project:
   stage: deploy
   script:
-    - rsync -arv --delete   ./project /
+    - ./project /
     - cd /project
     - bundle install
     - rails db:migrate
