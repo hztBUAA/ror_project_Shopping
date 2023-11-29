@@ -28,7 +28,7 @@ class CategoriesController < ApplicationController
         format.html { redirect_to categories_path, notice: "新增商品类别成功！" }
         format.json { render :show, status: :created, location: @category }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity , alert: "创建失败，类别已存在！"}
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
     end

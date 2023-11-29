@@ -5,7 +5,7 @@ class User < ApplicationRecord
   before_create :set_default_balance
   after_create :create_role_record
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable  #取消了:validatable  它会验证邮箱！！！
+         :recoverable, :rememberable , :trackable #取消了:validatable  它会验证邮箱！！！
   has_one :admin, dependent: :destroy,class_name: "Admin"#这里的class_name是什么意思
   has_one :seller, dependent: :destroy,class_name: "Seller" #这里的class_name是什么意思
   has_one :customer, dependent: :destroy,class_name:  "Customer" #这里的class_name是什么意思

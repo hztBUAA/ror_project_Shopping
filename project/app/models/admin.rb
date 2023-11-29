@@ -1,3 +1,3 @@
 class Admin < ApplicationRecord
-  belongs_to :user,dependent: :delete
+  belongs_to :user,dependent: :destroy
 end

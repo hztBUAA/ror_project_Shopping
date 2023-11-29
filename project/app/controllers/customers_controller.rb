@@ -27,6 +27,11 @@ class CustomersController < ApplicationController
   end
     def commodities
       @commodities = Commodity.all
+      # 根据类别筛选
+      @commodities = @commodities.where(category_id: params[:category]) if params[:category].present?
+
+      # 根据商品名筛选
+      @commodities = @commodities.where("commodity_name LIKE ?", "%#{params[:commodity_name]}%") if params[:commodity_name].present?
     end
   def index
     @customers = Customer.all

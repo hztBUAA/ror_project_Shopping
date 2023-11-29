@@ -2,6 +2,13 @@
     height: 10em; /* 调整为你想要的高度 */
     /* 可以添加其他样式，比如边框、内边距等 */
 }
+.no-commodities-message {
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #888; /* 选择合适的颜色 */
+    text-align: center;
+    margin-top: 20px; /* 调整与商品列表的距离 */
+}
 
 
 /*展示shop的flex卡片布局*/

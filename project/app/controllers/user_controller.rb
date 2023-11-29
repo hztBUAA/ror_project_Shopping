@@ -8,5 +8,10 @@ class UserController < ApplicationController
     @users = User.all
   end
 
+  # def image
+  #   @user = current_user
+  #   send_data @user.image.download, type: @user.image.content_type, disposition: 'inline'
+  # end
+
 
 end

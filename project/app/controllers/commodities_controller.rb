@@ -56,7 +56,7 @@ class CommoditiesController < ApplicationController
     # @commodity.shop.destroy if @commodity.shop
     # @commodity.category.destroy if @commodity.category
     # @commodity.seller.destroy if @commodity.seller
-    # @commodity.orders.destroy_all
+    # @commodity.orders.
     @commodity.destroy
     respond_to do |format|
       format.html { redirect_to seller_shop_commodities_path(@seller,@shop), notice: "所选商品下架成功！" }

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: "home#index"
   get 'home/index'
   get 'home/about'
+  get 'home/recent_logins'
   get 'customers/commodities',to: "customers#commodities"
   devise_for :users
   resources :user, only: [:show, :index]
