@@ -1,0 +1,19 @@
+<div id="<%= dom_id category %>" class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title"><%= category.name %></h5>
+
+    <!-- 商品列表 -->
+    <ul class="list-group">
+      <% category.commodities.each do |commodity| %>
+        <li class="list-group-item"><%= commodity.commodity_name %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- 删除按钮 -->
+  <div class="card-footer">
+    <%= link_to "编辑", edit_category_path(category), class: "btn btn-primary" %>
+    <%= link_to "删除", category_path(category), method: :delete, data: { confirm: "确定要删除此类别吗？" }, class: "btn btn-danger" %>
+
+  </div>
+</div>

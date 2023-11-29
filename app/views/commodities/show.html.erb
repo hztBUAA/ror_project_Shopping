@@ -1,0 +1,14 @@
+
+
+<%= render @commodity %>
+
+
+<div>
+  <%if current_seller? %>
+  <%= link_to "编辑信息", edit_seller_shop_commodity_path(@seller,@shop,@commodity) ,class: "btn btn-primary"%>
+    <%= link_to "不再供应", seller_shop_commodity_path(@seller,@shop,@commodity), method: :delete,class: "btn btn-primary", confirm: "Are you sure?" %>
+  <%end %>
+    <%= link_to "Back to commodities", seller_shop_commodities_path(@seller,@shop),class: "btn btn-primary"%>
+
+
+</div>

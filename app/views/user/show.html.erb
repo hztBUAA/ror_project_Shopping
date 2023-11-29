@@ -1,0 +1,86 @@
+<h2>个人简介</h2>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <!-- 左侧：用户头像 -->
+      <div class="col-md-4 text-center">
+        <% if current_user.image.attached? %>
+          <%= image_tag current_user.image, alt: "User Image", class: "card-img rounded-circle", style: "max-width: 200px; max-height: 200px;" %>
+        <% end %>
+      </div>
+
+      <!-- 右侧：用户信息 -->
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title text-center mb-4">用户名: <%= @user.user_name %></h5>
+          <p class="card-text text-center">身份: <%= @user.role %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 添加其他用户信息字段 -->
+    <% if @user.role == "customer" %>
+      <h6 class="card-subtitle mb-2 text-muted">订单信息:</h6>
+      <ul class="list-group">
+        <% @user.customer.orders.each do |order| %>
+          <li class="list-group-item">
+            订单ID: <%= order.id %>
+            <br>
+            商品: <%= order.commodity.commodity_name %>
+            <br>
+            数量: <%= order.count %>
+          </li>
+        <% end %>
+      </ul>
+    <%elsif @user.role == "seller"%>
+      <h6 class="card-subtitle mb-2 text-muted">商店信息:</h6>
+      <ul class="list-group">
+        <% @user.seller.shops.each do |shop| %>
+          <li class="list-group-item">
+            商店名称: <%= shop.shop_name %>
+            <br>
+            商店简介: <%= shop.info %>
+          </li>
+        <% end %>
+      </ul>
+    <%elsif @user.role == "admin"%>
+      <h5>你拥有很多权力！</h5>
+    <%end %>
+  </div>
+</div>
+<br>
+<%= form_for @user, url: user_path(@user), method: :put, html: { multipart: true, id: 'upload-form' } do |form| %>
+  <%= form.file_field :image, style: "display: none;", id: 'image-upload' %>
+  <label for="image-upload" class="upload-link-btn dropdown-item clickable">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-card-image " viewBox="0 0 16 16">
+      <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+      <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5z"/>
+    </svg>
+    上传头像
+  </label>
+<% end %>
+
+
+
+
+
+<%= link_to "编辑个人信息", edit_user_registration_url(@user), class: "btn btn-primary mt-3" %>
+<script>
+    function submitForm() {
+        var fileInput = document.getElementById('image-upload');
+        if (fileInput.files.length > 0) {
+            document.getElementById('upload-form').submit();
+        } else {
+            alert('请先选择要上传的图像文件。');
+        }
+    }
+
+<!-- Add this to the bottom of your HTML body -->
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('image-upload').addEventListener('change', function() {
+            document.getElementById('upload-form').submit();
+        });
+    });
+</script>

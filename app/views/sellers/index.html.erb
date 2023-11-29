@@ -1,0 +1,20 @@
+
+
+<h1>商家列表</h1>
+
+<div id="sellers">
+  <% @sellers.each do |seller| %>
+    <%= render seller %>
+    <%if current_admin? %>
+    <p>
+      <%= link_to "显示", seller, class: "btn btn-primary"%> |
+      <%= link_to "注销商家", seller_path(seller), method: :delete,class: "btn btn-danger"%>
+    </p>
+      <%else %>
+      <%= link_to "显示", seller, class: "btn btn-primary"%>
+      <%= link_to "返回", :back, class: "btn btn-secondary"%>
+<%end %>
+  <% end %>
+</div>
+
+<%#= link_to "New customer", new_customer_path %>

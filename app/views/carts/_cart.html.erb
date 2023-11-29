@@ -1,0 +1,33 @@
+<style>
+    .img-thumbnail {
+        /*width: 100px; !* 你希望的宽度 *!*/
+        height: 100%; /* 你希望的高度 */
+        object-fit: cover; /* 保持图片纵横比例，不拉伸变形 */
+    }
+</style>
+<div id="<%= dom_id(cart) %>" class="container mt-4">
+  <h2 class="mb-4">购物车</h2>
+  <% cart.orders.each do |order| %>
+    <% unless order.done %>
+      <div class="card mb-3">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <% if order.commodity.image.attached? %>
+              <%= image_tag order.commodity.image, class: 'img-thumbnail', alt: 'Commodity Image' %>
+            <% end %>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"><strong>商品名字：</strong><%= order.commodity.commodity_name %></h5>
+              <p class="card-text"><strong>数量：</strong><%= order.count %></p>
+              <p class="card-text"><strong>商品价格：</strong><%= order.commodity.price %></p>
+              <p class="card-text"><strong>总价：</strong><%= order.commodity.price * order.count %></p>
+              <p class="card-text"><strong>收货信息</strong>：<%= order.address.full_address %></p>
+              <p class="card-text"><strong>创建时间：</strong><%= order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,71 @@
+<style>
+    .checkbox-animate {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .checkbox-animate:checked {
+        transform: scale(1.2);
+    }
+
+</style>
+<div class="container mt-4">
+  <h2 class="mb-4">编辑购物车</h2>
+  <%= form_with(model: @cart, url: customer_cart_path(@customer), class: "mb-4", id: "cart-form") do |form| %>
+    <% if @cart.errors.any? %>
+      <div class="alert alert-danger">
+        <h2><%= pluralize(@cart.errors.count, "error") %> prohibited this cart from being saved:</h2>
+
+        <ul>
+          <% @cart.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% @cart.orders.each do |order| %>
+      <%unless order.done%>
+          <div class="card mb-3">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <% if order.commodity.image.attached? %>
+                  <%= image_tag order.commodity.image, class: 'img-thumbnail', alt: 'Commodity Image' %>
+                <% end %>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <%= check_box_tag "order_ids[]", order.id, false, { class: "form-check-input form-check-lg checkbox-animate" }%>
+                  <h5 class="card-title">商品名字：<%= order.commodity.commodity_name %></h5>
+                  <p class="card-text">数量：<%= order.count %></p>
+                  <p class="card-text">商品价格：<%= order.commodity.price %></p>
+                  <p class="card-text">总价：<%= order.commodity.price * order.count %></p>
+                  <p class="card-text">创建时间：<%= order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+      <%end %>
+    <% end %>
+
+
+    <div class="mt-3">
+      <%= form.submit "支付选中订单", class: "btn btn-primary mr-2" %>
+      <%= form.submit "删除选中订单", class: "btn btn-danger mr-2" %>
+      <%= link_to "取消编辑", customer_cart_path(@customer),class: "btn btn-primary mr-2" %>
+    </div>
+  <% end %>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("#cart-form");
+
+        form.addEventListener("submit", function(event) {
+            const selectedOrders = document.querySelectorAll("input[name='order_ids[]']:checked");
+
+            if (selectedOrders.length === 0) {
+                alert("请至少选择一个订单进行操作。");
+                event.preventDefault(); // 阻止表单提交
+            }
+        });
+    });
+</script>

@@ -1,0 +1,50 @@
+<div class="card mt-3">
+  <div class="card-header">
+    <h3><strong><%= @customer.user.user_name %></strong> 的信息</h3>
+  </div>
+  <div class="card-body">
+    <div class="row no-gutters">
+      <!-- 左侧：用户头像 -->
+      <div class="col-md-4">
+        <% if @customer.user.image.attached? %>
+          <%= image_tag @customer.user.image, alt: "User Image", class: "card-img rounded-circle", style: "max-width: 100px; max-height: 100px;" %>
+        <% end %>
+      </div>
+      <!-- 右侧：用户信息 -->
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">用户名: <%= @customer.user.user_name %></h5>
+          <p class="card-text">身份: <%= @customer.user.role %></p>
+        </div>
+      </div>
+    </div>
+    <% if  @customer.orders.empty?%>
+      <h6>     该顾客暂无订单</h6>
+    <%end %>
+  </div>
+
+  <ul class="list-group list-group-flush">
+
+    <% @customer.orders.each do |order| %>
+      <li class="list-group-item">
+        订单ID: <%= order.id %>
+        <br>
+        商品: <%= order.commodity.commodity_name %>
+        <br>
+        数量: <%= order.count %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="card-footer">
+    <% if current_admin? %>
+<!--    <%#= link_to "编辑信息", edit_customer_path(@customer), class: "btn btn-primary mr-2" %> |-->
+    <%= link_to "返回顾客列表", customers_path, class: "btn btn-secondary mr-2" %>
+<!--<hr/>-->
+    <%= link_to "注销顾客", @customer, method: :delete, data: { confirm: "确定要删除该顾客吗？" }, class: "btn btn-danger" %>
+  <%end %>
+    <%= link_to "返回", :back ,class:  "btn btn-secondary"%>
+  </div>
+
+
+</div>

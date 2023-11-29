@@ -1,0 +1,26 @@
+
+
+<div id="<%= dom_id seller %>">
+  <div class="card">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">商家ID: <%= seller.id %></h6>
+      <h6 class="card-subtitle mb-2 text-muted">商家名字: <%= seller.user.user_name %></h6>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-header">
+        所有超市
+      </div>
+      <ul class="list-group list-group-flush">
+        <% seller.shops.each do |shop| %>
+          <li class="list-group-item shop-item card">
+            <div class="card-body">
+              <h5 class="card-title shop-name">店铺名字: <%= shop.shop_name %></h5>
+              <p class="card-text shop-info">店铺简介: <%= shop.info %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

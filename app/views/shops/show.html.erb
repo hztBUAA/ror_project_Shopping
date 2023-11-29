@@ -1,0 +1,32 @@
+
+<%= stylesheet_link_tag 'commodity' %>
+<%#= render @shop %>
+<div>
+  <h1><%= @shop.shop_name %></h1>
+  <h2><%= @shop.info %></h2>
+</div>
+<div class="commodities-container">
+  <ul>
+    <% @shop.commodities.each do |commodity| %>
+      <div class="commodities-item">
+
+        <%= render 'commodities/commodity', commodity: commodity%>
+      </div>
+    <% end %>
+  </ul>
+</div>
+<!--在show页面进行编辑商品和删除商品操作-->
+<% if current_seller?%>
+    <%= link_to"增加商品" , new_seller_shop_commodity_path(@seller,@shop) ,class: "btn btn-secondary"%>
+<%end %>
+
+
+<br/>
+<br/>
+<div>
+  <%= link_to "编辑店铺", edit_seller_shop_path(@seller,@shop) ,class: "btn btn-primary"%> |
+  <%=link_to "返回", seller_shops_path(@seller) ,class: "btn btn-secondary"%>
+  <hr/>
+
+  <%= button_to "注销店铺", seller_shop_path(@seller,@shop), method: :delete ,class: "btn btn-danger"%>
+</div>

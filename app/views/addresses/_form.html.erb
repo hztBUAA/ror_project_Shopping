@@ -1,0 +1,41 @@
+<%= form_with(model: address, url: address.persisted? ? customer_address_path(@customer,@address) : customer_addresses_path(@customer), method: address.persisted? ? :patch : :post) do |form| %>
+  <% if address.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(address.errors.count, 'error') %> 阻止此地址被保存：</h4>
+      <ul>
+        <% address.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :country %>
+    <%= form.text_field :country, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :city %>
+    <%= form.text_field :city, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :house_address %>
+    <%= form.text_field :house_address, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :phone_number %>
+    <%= form.text_field :phone_number, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :greeting_name %>
+    <%= form.text_field :greeting_name, class: 'form-control' %>
+  </div>
+<br/>
+  <div class="actions">
+    <%= form.submit '确认', class: 'btn btn-primary' %>
+  </div>
+<% end %>

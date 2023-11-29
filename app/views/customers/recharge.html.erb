@@ -1,0 +1,11 @@
+<h1>充值页面</h1>
+
+<%= form_tag(process_recharge_customer_path(@customer), method: :post) do %>
+  <%= csrf_meta_tags %>
+  <%= label_tag :amount, '充值金额' , class: "control-label"%>
+  <%= number_field_tag :amount, nil, step: 0.01 , class: "form-control"%>
+
+  <hr/>
+  <%= submit_tag '确认', class: "btn btn-primary" %>
+  <%= link_to "返回" , :back ,class: "btn btn-secondary" %>
+<% end %>

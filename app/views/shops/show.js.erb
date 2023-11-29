@@ -1,0 +1,14 @@
+// 确保在页面加载完成后执行脚本
+$(document).ready(function () {
+    // 为带有 data-commodity-id 属性的卡片添加点击事件
+    $('.card').on('click', function () {
+        // 从卡片的 data-commodity-id 属性中获取商品 ID
+        const commodityId = $(this).data('commodity-id');
+
+        // 构建商品详细信息页面的链接
+        const path = '<%= seller_shop_commodity_path(@shop.seller, @shop, '') %>' + commodityId;
+
+        // 跳转到商品详细信息页面
+        window.location.href = path;
+    });
+});
