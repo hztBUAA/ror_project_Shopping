@@ -23,7 +23,7 @@ class CommoditiesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to commodity_url(Commodity.last)
   end
 
-  test "should show commodity" do
+  test "should index commodity" do
     get commodity_url(@commodity)
     assert_response :success
   end

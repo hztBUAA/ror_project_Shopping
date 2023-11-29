@@ -23,7 +23,7 @@ class AdminsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_url(Admin.last)
   end
 
-  test "should show admin" do
+  test "should index admin" do
     get admin_url(@admin)
     assert_response :success
   end

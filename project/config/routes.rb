@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'home/recent_logins'
   get 'customers/commodities',to: "customers#commodities"
   devise_for :users
-  resources :user, only: [:show, :index]
+  resources :user, only: [:index, :show,:update]
 
   resources :sellers do
     resources :shops do
@@ -14,16 +14,13 @@ Rails.application.routes.draw do
   end
   resources :customers , except: [:edit, :update] do
     get 'purchase/:commodity_id', to: "customers#purchase", as: :purchase
-    resource :addresses do
-    end
+    resources :addresses
     member do
       get 'recharge' # 充值页面
       post 'process_recharge' # 处理充值请求
     end
-    resource :cart do
-    end
-    resources :orders do
-    end
+    resource :cart
+    resources :orders
     #resources :records
   end
 

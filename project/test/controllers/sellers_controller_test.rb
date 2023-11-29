@@ -23,7 +23,7 @@ class SellersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to seller_url(Seller.last)
   end
 
-  test "should show seller" do
+  test "should index seller" do
     get seller_url(@seller)
     assert_response :success
   end

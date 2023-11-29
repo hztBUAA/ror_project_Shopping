@@ -30,7 +30,7 @@ class CommoditiesController < ApplicationController
     respond_to do |format|
       if @commodity.save
         format.html { redirect_to seller_shop_commodity_path(@seller,@shop,@commodity), notice: "新增商品上架成功！" }
-        format.json { render :show, status: :created, location: @commodity }
+        format.json { render :index, status: :created, location: @commodity }
       else
         format.html { render :new, status: :unprocessable_entity,notice: "新增商品上架失败，请联系管理员！" }
         format.json { render json: @commodity.errors, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class CommoditiesController < ApplicationController
     respond_to do |format|
       if @commodity.update(commodity_params)
         format.html { redirect_to seller_shop_commodity_path(@seller,@shop,@commodity), notice: "商品信息更新更新成功" }
-        format.json { render :show, status: :ok, location: @commodity }
+        format.json { render :index, status: :ok, location: @commodity }
       else
         format.html { render :edit, status: :unprocessable_entity,notice: "商品信息更新失败，请联系管理员！" }
         format.json { render json: @commodity.errors, status: :unprocessable_entity }

@@ -38,7 +38,7 @@ class ShopsController < ApplicationController
     respond_to do |format|
       if @shop.save
         format.html { redirect_to seller_shops_path(@seller), notice: "Shop was successfully created." }
-        format.json { render :show, status: :created, location: @shop }
+        format.json { render :index, status: :created, location: @shop }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @shop.errors, status: :unprocessable_entity }
@@ -51,7 +51,7 @@ class ShopsController < ApplicationController
     respond_to do |format|
       if @shop.update(shop_params)
         format.html { redirect_to seller_shop_path(@shop), notice: "Shop was successfully updated." }
-        format.json { render :show, status: :ok, location: @shop }
+        format.json { render :index, status: :ok, location: @shop }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @shop.errors, status: :unprocessable_entity }

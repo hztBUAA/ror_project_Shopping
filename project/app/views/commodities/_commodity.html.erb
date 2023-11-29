@@ -1,22 +1,37 @@
 
 <div id="<%= dom_id commodity %>">
 <!--  显示商品的信息-->
-    <div class="card" style="width: 18rem;display: flex"  >
+  <div class="card" style="width: 18rem; height: 30rem; display: flex;">
       <div class="card-body" >
         <h4 class="card-title clickable" onclick="window.location='<%= seller_shop_commodity_path(commodity.seller,commodity.shop,commodity) %>'"><%= commodity.commodity_name %></h4>
         <div>
-          <% if commodity.image.attached? %>
-            <%= image_tag commodity.image, style: 'max-width: 100%; height: auto;margin: 1px' %>
-          <% end %>
+            <% if commodity.image.attached? %>
+              <%= image_tag commodity.image, style: 'width: 100%; height: 200px; object-fit: contain; margin: 1px;' %>
+            <% end %>
         </div>
         <hr/>
         <h5 class="card-subtitle mb-2 text-body-secondary"><strong>商品简介</strong>：<%= commodity.info %></h5>
         <h6 class="card-text"><strong>价格</strong>：￥<%= commodity.price %></h6>
+        <h6 class="card-text"><strong>销量</strong>：<%= commodity.sales %></h6>
         <h6 class="card-text"><strong>库存</strong>：<%= commodity.count %></h6>
         <%if current_customer? %>
-        <%=link_to "加入购物车", new_customer_order_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:false),class: "btn btn-primary"%>
-        <%=link_to "购买", customer_purchase_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:true),class: "btn btn-primary"%>
-      <%end %>
+        <%#=link_to "加入购物车", new_customer_order_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:false),class: "btn btn-primary"%>
+        <%#=link_to "购买", customer_purchase_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:true),class: "btn btn-primary"%>
+          <%= link_to new_customer_order_path(customer_id: current_user.customer.id, commodity_id: commodity.id, done: false), class: "btn" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cart  " viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+            </svg>
+
+          <% end %>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <%= link_to customer_purchase_path(customer_id: current_user.customer.id, commodity_id: commodity.id, done: true), class: "round logo" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-alipay round logo" viewBox="0 0 16 16">
+              <path d="M2.541 0H13.5a2.551 2.551 0 0 1 2.54 2.563v8.297c-.006 0-.531-.046-2.978-.813-.412-.14-.916-.327-1.479-.536-.303-.113-.624-.232-.957-.353a12.98 12.98 0 0 0 1.325-3.373H8.822V4.649h3.831v-.634h-3.83V2.121H7.26c-.274 0-.274.273-.274.273v1.621H3.11v.634h3.875v1.136h-3.2v.634H9.99c-.227.789-.532 1.53-.894 2.202-2.013-.67-4.161-1.212-5.51-.878-.864.214-1.42.597-1.746.998-1.499 1.84-.424 4.633 2.741 4.633 1.872 0 3.675-1.053 5.072-2.787 2.08 1.008 6.37 2.738 6.387 2.745v.105A2.551 2.551 0 0 1 13.5 16H2.541A2.552 2.552 0 0 1 0 13.437V2.563A2.552 2.552 0 0 1 2.541 0"/>
+              <path d="M2.309 9.27c-1.22 1.073-.49 3.034 1.978 3.034 1.434 0 2.868-.925 3.994-2.406-1.602-.789-2.959-1.353-4.425-1.207-.397.04-1.14.217-1.547.58Z"/>
+            </svg>
+<!--            购买-->
+          <% end %>
+        <%end %>
       </div>
     </div>
 

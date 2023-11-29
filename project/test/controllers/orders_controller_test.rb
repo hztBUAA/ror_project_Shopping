@@ -23,7 +23,7 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to order_url(Order.last)
   end
 
-  test "should show order" do
+  test "should index order" do
     get order_url(@order)
     assert_response :success
   end

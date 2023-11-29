@@ -1,8 +1,13 @@
 class AddressesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_customer
+  def index
+    @customer = current_user.customer
+    @addresses = @customer.addresses
+  end
 
   def new
+    @customer = current_user.customer
     @address = @customer.addresses.build
   end
 
@@ -17,14 +22,15 @@ class AddressesController < ApplicationController
   end
 
   def edit
-    @address = @customer.address
+    @customer = current_user.customer
+    @address = @customer.addresses.find(params[:id])
   end
 
   def update
-    @address = @customer.address
+    @address = Address.find(param[:id])
 
     if @address.update(address_params)
-      redirect_to edit_customer_path(@customer), notice: '收货地址更新成功！'
+      redirect_to customer_addresses_path(@customer), notice: '收货地址更新成功！'
     else
       render :edit
     end
@@ -34,7 +40,7 @@ class AddressesController < ApplicationController
     @address = @customer.address
     @address.destroy
 
-    redirect_to edit_customer_path(@customer), notice: '收货地址删除成功！'
+    redirect_to customer_addresses_path(@customer), notice: '收货地址删除成功！'
   end
 
   private

@@ -60,7 +60,32 @@ h5 {
     opacity: 1;
   }
 }
+@keyframes changeColor {
+  0% { fill: blue; }
+  25% { fill: green; }
+  50% { fill: red; }
+  75% { fill: orange; }
+  100% { fill: blue; }
+}
+.round{
+  border-radius: 50%;
+}
+.upload-link {
+  list-style: none;
+}
 
+.upload-link-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #1b1e21;
+}
+
+.logo {
+  animation: changeColor 5s infinite;
+}
 /* Apply Animation to Elements */
 h1, h3, h4, h5 {
   animation: fadeIn 1s ease-in-out;

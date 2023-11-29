@@ -23,7 +23,7 @@ class CustomersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to customer_url(Customer.last)
   end
 
-  test "should show customer" do
+  test "should index customer" do
     get customer_url(@customer)
     assert_response :success
   end

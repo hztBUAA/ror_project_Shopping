@@ -23,7 +23,7 @@ class ShopsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to shop_url(Shop.last)
   end
 
-  test "should show shop" do
+  test "should index shop" do
     get shop_url(@shop)
     assert_response :success
   end

@@ -33,7 +33,7 @@ class AdminsController < ApplicationController
     respond_to do |format|
       if @admin.save
         format.html { redirect_to admin_url(@admin), notice: "Admin was successfully created." }
-        format.json { render :show, status: :created, location: @admin }
+        format.json { render :index, status: :created, location: @admin }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @admin.errors, status: :unprocessable_entity }
@@ -46,7 +46,7 @@ class AdminsController < ApplicationController
     respond_to do |format|
       if @admin.update(admin_params)
         format.html { redirect_to admin_url(@admin), notice: "Admin was successfully updated." }
-        format.json { render :show, status: :ok, location: @admin }
+        format.json { render :index, status: :ok, location: @admin }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @admin.errors, status: :unprocessable_entity }

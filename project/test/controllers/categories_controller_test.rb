@@ -23,7 +23,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to category_url(Category.last)
   end
 
-  test "should show category" do
+  test "should index category" do
     get category_url(@category)
     assert_response :success
   end
