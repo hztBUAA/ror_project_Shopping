@@ -4,5 +4,5 @@ class Commodity < ApplicationRecord
   belongs_to :seller
   has_many :orders,dependent: :destroy
   has_one_attached :image,dependent: :destroy
-  validates :commodity_name, presence: true
+  validates_presence_of :commodity_name, :price, :count, :info, :category_id
 end
