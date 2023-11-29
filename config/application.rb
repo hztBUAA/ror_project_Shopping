@@ -12,6 +12,7 @@ module App
     config.load_defaults 7.0
     config.hosts << "21371024.project.rubyapp.act.buaa.edu.cn:9000"
     config.hosts << "21371024.project.rubyapp.act.buaa.edu.cn:9000"
+    config.hosts << "shopping-1.onrender.com"
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
