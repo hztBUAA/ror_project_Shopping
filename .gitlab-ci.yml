@@ -1,9 +1,10 @@
 deploy-project:
   stage: deploy
   script:
-    - rsync -arv --delete  --exclude="*.sqlite3" ./project /
+    - rsync -arv --delete --exclude="*.sqlite3" ./project /
     - cd /project
     - bundle install
+    - bundle exec rake assets:precompile
     - rails db:migrate
     - sv restart project
   only:

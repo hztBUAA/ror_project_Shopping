@@ -24,6 +24,22 @@ class CartsController < ApplicationController
     @orders = @cart.orders
     @customer = current_user.customer
   end
+  def delete_selected
+    # 获取选中的订单的 IDs
+    selected_order_ids = params[:order_ids]
+
+    # 确保有选中的订单
+    if selected_order_ids.present?
+      # 在这里添加删除订单的逻辑，例如：
+      Order.where(id: selected_order_ids).destroy_all
+
+      # 重定向到购物车页面或其他适当的页面
+      redirect_to customer_cart_path(@customer), notice: '选中订单已删除'
+    else
+      # 如果没有选中的订单，可能显示一个提示信息
+      redirect_to customer_cart_path(@customer), alert: '请选择要删除的订单'
+    end
+  end
 
   # POST /carts or /carts.json
   def create
@@ -51,7 +67,8 @@ class CartsController < ApplicationController
       redirect_to customer_cart_path(@customer),notice: "您勾选的商品已经支付成功！"
     elsif params[:commit] == "删除选中订单"
       # 处理删除选中订单的逻辑
-      selected_order_ids = params[:order_ids].reject(&:empty?)
+      selected_order_ids = params[:order_ids]&.reject(&:empty?) || []
+      # selected_order_ids = params[:order_ids].reject(&:empty?)
       selected_orders = @cart.orders.where(id: selected_order_ids)
       selected_orders.destroy_all
       # 进行删除逻辑...

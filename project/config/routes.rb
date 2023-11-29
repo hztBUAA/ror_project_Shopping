@@ -19,7 +19,9 @@ Rails.application.routes.draw do
       get 'recharge' # 充值页面
       post 'process_recharge' # 处理充值请求
     end
-    resource :cart
+    resource :cart do
+      post 'delete_selected'
+    end
     resources :orders
     #resources :records
   end
