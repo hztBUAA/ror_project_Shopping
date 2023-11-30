@@ -26,13 +26,7 @@
   <ul class="list-group list-group-flush">
 
     <% @customer.orders.each do |order| %>
-      <li class="list-group-item">
-        订单ID: <%= order.id %>
-        <br>
-        商品: <%= order.commodity.commodity_name %>
-        <br>
-        数量: <%= order.count %>
-      </li>
+      <% render 'orders/order', order: order%>
     <% end %>
   </ul>
 

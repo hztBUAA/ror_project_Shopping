@@ -17,7 +17,10 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @customer = current_user.customer
+    if current_user.customer.addresses.empty?
+      redirect_to new_customer_address_path(current_user.customer) , notice: '请先添加收货地址然后再执行购买或加入购物车操作~！'and return
+    end
+      @customer = current_user.customer
     @commodity = Commodity.find(params[:commodity_id])
     @done = params[:done]
     # @price = @commodity.price
@@ -37,6 +40,7 @@ class OrdersController < ApplicationController
     # debugger
     @customer = current_user.customer
     @order = Order.new(order_params)
+    # debugger
     # @order.address = Address.find(params[:order][:address_id])
     # Check if the address_id is provided in the params
     if params[:order][:address_id].present?
@@ -110,6 +114,7 @@ class OrdersController < ApplicationController
     end
   end
   def address_params
+
     params.require(:order).require(:address).permit(:street, :city, :country, :house_address, :phone_number, :greeting_name)
   end
 

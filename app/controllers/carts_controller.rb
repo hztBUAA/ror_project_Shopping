@@ -19,10 +19,11 @@ class CartsController < ApplicationController
 
   # GET /carts/1/edit
   def edit
-    # 获取购物车及其订单
-    @cart = Cart.find(params[:customer_id])
-    @orders = @cart.orders
     @customer = current_user.customer
+    # 获取购物车及其订单
+    @cart = @customer.cart
+    @orders = @cart.orders
+
   end
   def delete_selected
     # 获取选中的订单的 IDs
@@ -56,36 +57,51 @@ class CartsController < ApplicationController
   end
 
   def update
-    @cart = Cart.find(params[:customer_id])
     @customer = current_user.customer
+    @cart =@customer.cart
+
+
     if params[:commit] == "支付选中订单"
       # 处理支付选中订单的逻辑
       selected_order_ids = params[:order_ids].reject(&:empty?)
       selected_orders = @cart.orders.where(id: selected_order_ids)
-      # 进行支付逻辑...
-      selected_orders.update_all(done: true)
-      redirect_to customer_cart_path(@customer),notice: "您勾选的商品已经支付成功！"
+
+      # 计算支付总金额
+      total_amount = selected_orders.sum { |order| order.commodity.price * order.count }
+
+      # 检查顾客的余额是否足够支付
+      if @customer.user.balance >= total_amount
+        # 开始支付逻辑...
+
+        # 更新商品的销量和库存
+        selected_orders.each do |order|
+          commodity = order.commodity
+          commodity.update(
+            sales: commodity.sales + order.count,
+            count: commodity.count - order.count
+          )
+        end
+
+        # 扣除顾客的余额
+        @customer.user.update(balance: @customer.user.balance - total_amount)
+
+        # 更新订单状态
+        selected_orders.update_all(done: true)
+
+        redirect_to customer_cart_path(@customer), notice: "您勾选的商品已经支付成功！"
+      else
+        redirect_to customer_cart_path(@customer), alert: "余额不足，支付失败！"
+      end
     elsif params[:commit] == "删除选中订单"
       # 处理删除选中订单的逻辑
       selected_order_ids = params[:order_ids]&.reject(&:empty?) || []
-      # selected_order_ids = params[:order_ids].reject(&:empty?)
       selected_orders = @cart.orders.where(id: selected_order_ids)
       selected_orders.destroy_all
       # 进行删除逻辑...
-      redirect_to customer_cart_path(@customer),notice: "您勾选的商品已经删除成功！"
+      redirect_to customer_cart_path(@customer), notice: "您勾选的商品已经删除成功！"
     end
-
-    # 其他逻辑...
-    # respond_to do |format|
-    #   if @cart.update(cart_params)
-    #     format.html { redirect_to cart_url(@cart), notice: "Cart was successfully updated." }
-    #     format.json { render :index, status: :ok, location: @cart }
-    #   else
-    #     format.html { render :edit, status: :unprocessable_entity }
-    #     format.json { render json: @cart.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
+
   # PATCH/PUT /carts/1 or /carts/1.json
 
 

@@ -20,6 +20,12 @@ class CustomersController < ApplicationController
   end
   # GET /customers or /customers.json
     def purchase
+      # @address = Address.new
+      if current_user.customer.addresses.empty?
+        redirect_to new_customer_address_path(current_user.customer) , notice: '请先添加收货地址然后再执行购买或加入购物车操作~！'and return
+      else
+        @address = current_user.customer.addresses.first
+      end
       @order = Order.new
     end
   def add_to_my_cart

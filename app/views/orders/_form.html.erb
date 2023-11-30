@@ -15,7 +15,7 @@
     <!-- 如果有地址，显示下拉列表 -->
     <div class="form-group">
       <%= form.label :address, "选择地址" %>
-      <%= form.collection_select(:address_id, current_user.customer.addresses, :id, :full_address, { prompt: "请选择地址" }, class: "form-control") %>
+      <%= form.collection_select(:address_id, current_user.customer.addresses, :id, :full_address, { prompt: "请选择地址" }, { class: "form-control", required: true }) %>
     </div>
   <% else %>
     <h2>
