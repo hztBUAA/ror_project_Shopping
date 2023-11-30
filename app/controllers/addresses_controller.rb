@@ -9,12 +9,12 @@ class AddressesController < ApplicationController
   def new
     @customer = current_user.customer
     @address = Address.new
-    debugger
+    # debugger
   end
 
   def create
     @customer = current_user.customer
-    debugger
+    # debugger
     @address = @customer.addresses.build(address_params)
 
     # @address = @customer.addresses.build(address_params)
