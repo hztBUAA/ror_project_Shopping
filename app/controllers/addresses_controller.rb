@@ -8,11 +8,16 @@ class AddressesController < ApplicationController
 
   def new
     @customer = current_user.customer
-    @address = @customer.addresses.build
+    @address = Address.new
+    debugger
   end
 
   def create
+    @customer = current_user.customer
+    debugger
     @address = @customer.addresses.build(address_params)
+
+    # @address = @customer.addresses.build(address_params)
 
     if @address.save
       redirect_to customers_commodities_path, notice: '收货地址创建成功！'
@@ -20,6 +25,7 @@ class AddressesController < ApplicationController
       render :new
     end
   end
+
 
   def edit
     @customer = current_user.customer
@@ -54,8 +60,8 @@ class AddressesController < ApplicationController
   end
 
   def address_params
-    if params[:order] && params[:order][:address]
-      params.require(:order).require(:address).permit(:street, :city, :country, :house_address, :phone_number, :greeting_name)
+    if params[:address]
+      params.require(:address).permit(:city, :country, :house_address, :phone_number, :greeting_name)
     else
       # Handle the case where address parameters are missing
       render 'new' ,notice: "请输入收货信息"

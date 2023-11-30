@@ -1,9 +1,9 @@
-<%= form_with(model: address, url: address.persisted? ? customer_address_path(@customer,@address) : customer_addresses_path(@customer), method: address.persisted? ? :patch : :post) do |form| %>
-  <% if address.errors.any? %>
+<%= form_with(model: @address, url: customer_addresses_path(@customer), method: :post) do |form| %>
+  <% if @address.errors.any? %>
     <div class="alert alert-danger">
-      <h4><%= pluralize(address.errors.count, 'error') %> 阻止此地址被保存：</h4>
+      <h4><%= pluralize(@address.errors.count, 'error') %> 阻止此地址被保存：</h4>
       <ul>
-        <% address.errors.full_messages.each do |msg| %>
+        <%@address.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
       </ul>
