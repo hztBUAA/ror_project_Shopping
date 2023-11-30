@@ -49,9 +49,14 @@ class AddressesController < ApplicationController
       @address.destroy
       redirect_to customer_addresses_path(@customer), notice: '收货地址删除成功！'
     rescue ActiveRecord::InvalidForeignKey
-      redirect_to customer_addresses_path(@customer), alert: '您还有订单正在送往这个地址，删除失败！'
+      respond_to do |format|
+        format.js   # 添加这一行以响应 JavaScript
+      end
+      # redirect_to customer_addresses_path(@customer), alert: '您还有订单正在送往这个地址，删除失败！'
+      # 添加这一行以响应 JavaScript
     end
   end
+
 
   private
 
