@@ -1,14 +1,59 @@
+<div class="container-fluid">
+  <div class="d-flex">
+    <div class="col">
+      <%= render @commodity %>
+      <div>
+        <%if current_seller? %>
+        <%= link_to "编辑信息", edit_seller_shop_commodity_path(@seller,@shop,@commodity) ,class: "btn btn-primary"%>
+          <%= link_to "不再供应", seller_shop_commodity_path(@seller,@shop,@commodity), method: :delete,class: "btn btn-primary", confirm: "Are you sure?" %>
+        <%end %>
+          <%= link_to "Back to commodities", seller_shop_commodities_path(@seller,@shop),class: "btn btn-primary"%>
+      </div>
+    </div>
+    <div class="col">
+      <% comments = @commodity.comments %>
+      <h4>评论(<%= comments.size %>)</h4>
+      <% for comment in comments %>
+        <div class="card mt-1">
+          <div class="card-header">
+            <% if comment.customer.user.image.attached? %>
+              <%= image_tag comment.customer.user.image, alt: "User Avatar", class: "round", style: "height: 30px;width: 30px;" %>&nbsp;
+            <% end %>
+            <%= comment.customer.user.user_name %>&nbsp;&nbsp;
+            <%= time_ago_in_words comment.created_at %>
+            <%= link_to comment, method: :delete do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+              </svg>
+            <% end %>
 
+          </div>
+          <div class="card-body">
+            <%= comment.text %>
+          </div>
+        </div>
+      <% end %>
+      <hr>
+      <% if current_customer? && current_user.customer.orders.map {|order| order.commodity}.include?(@commodity) %>
+        <%= form_with(model: @comment) do |form| %>
+          <% if @comment.errors.any? %>
+            <div style="color: red">
+              <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
-<%= render @commodity %>
-
-
-<div>
-  <%if current_seller? %>
-  <%= link_to "编辑信息", edit_seller_shop_commodity_path(@seller,@shop,@commodity) ,class: "btn btn-primary"%>
-    <%= link_to "不再供应", seller_shop_commodity_path(@seller,@shop,@commodity), method: :delete,class: "btn btn-primary", confirm: "Are you sure?" %>
-  <%end %>
-    <%= link_to "Back to commodities", seller_shop_commodities_path(@seller,@shop),class: "btn btn-primary"%>
-
-
+              <ul>
+                <% @comment.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= form.hidden_field :customer_id, value: current_user.customer.id %>
+          <%= form.hidden_field :commodity_id, value: @commodity.id %>
+          <%= form.text_field :text, class: "form-control" %>
+          <%= form.submit "提交评论", class: "btn btn-primary mt-2" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>

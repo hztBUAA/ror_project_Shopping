@@ -7,7 +7,7 @@
       <!-- 左侧：用户头像 -->
       <div class="col-md-4">
         <% if @customer.user.image.attached? %>
-          <%= image_tag @customer.user.image, alt: "User Image", class: "card-img rounded-circle", style: "max-width: 100px; max-height: 100px;" %>
+          <%= image_tag @customer.user.image, alt: "User Image", class: "card-img rounded-circle", style: "width: 100px; height: 100px;" %>
         <% end %>
       </div>
       <!-- 右侧：用户信息 -->

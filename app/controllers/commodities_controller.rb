@@ -11,6 +11,7 @@ class CommoditiesController < ApplicationController
 
   # GET /commodities/1 or /commodities/1.json
   def show
+    @comment = Comment.new
   end
 
   # GET /commodities/new
@@ -69,12 +70,12 @@ class CommoditiesController < ApplicationController
     def set_commodity
       @commodity = Commodity.find(params[:id])
     end
-  def set_seller
-    @seller = Seller.find(params[:seller_id])
-  end
-  def set_shop
-    @shop = Shop.find(params[:shop_id])
-  end
+    def set_seller
+      @seller = Seller.find(params[:seller_id])
+    end
+    def set_shop
+      @shop = Shop.find(params[:shop_id])
+    end
 
     # Only allow a list of trusted parameters through.
     def commodity_params
