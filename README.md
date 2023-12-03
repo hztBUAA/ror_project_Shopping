@@ -4,7 +4,7 @@
 
 ### 顾客
 
-顾客是电商平台的普通用户，他们可以通过注册和登录来访问平台。一旦登录，顾客可以浏览平台上的商品，将心仪的商品加入购物车，进行下单购买。在购物的过程中，顾客可以管理个人信息，包括修改密码、添加或删除收货地址等。顾客还可以查看订单历史，了解订单状态，并进行支付操作。购物车和订单管理是顾客在平台上的核心功能，使他们能够方便快捷地完成购物流程。
+顾客是电商平台的普通用户，他们可以通过注册和登录来访问平台。一旦登录，顾客可以浏览平台上的商品，将心仪的商品加入购物车，进行下单购买，购买之后可以对产品进行评价。在购物的过程中，顾客可以管理个人信息，包括修改密码、添加或删除收货地址等。顾客还可以查看订单历史，了解订单状态，并进行支付操作。购物车和订单管理是顾客在平台上的核心功能，使他们能够方便快捷地完成购物流程。
 
 ### 商家
 
@@ -37,55 +37,45 @@
    - 与`admins`表通过`user_id`建立一对一关系，表示管理员用户。
    - 与`customers`表通过`user_id`建立一对一关系，表示普通顾客用户。
    - 与`sellers`表通过`user_id`建立一对一关系，表示卖家用户。
-
 2. **`admins`表:**
    - 表示管理员用户，通过`user_id`与`users`表建立一对一关系。
-
 3. **`customers`表:**
    - 与`users`表通过`user_id`建立一对一关系，表示普通顾客用户。
    - 与`carts`表通过`cart_id`建立一对一关系，表示顾客的购物车。
-
 4. **`carts`表:**
    - 与`customers`表通过`cart_id`建立一对一关系，表示购物车。
    - 与`orders`表通过`cart_id`建立一对多关系，表示购物车中的订单。
-
 5. **`orders`表:**
    - 与`commodities`表通过`commodity_id`建立多对一关系，表示订单中的商品。
    - 与`customers`表通过`customer_id`建立多对一关系，表示订单所属的顾客。
    - 与`addresses`表通过`address_id`建立多对一关系，表示订单的配送地址。
-
 6. **`commodities`表:**
    - 与`categories`表通过`category_id`建立多对一关系，表示商品所属的类别。
    - 与`sellers`表通过`seller_id`建立多对一关系，表示商品的卖家。
    - 与`shops`表通过`shop_id`建立多对一关系，表示商品所属的商店。
    - 与`images`表通过`image_id`建立多对一关系，表示商品的图片。
-
 7. **`sellers`表:**
    - 与`users`表通过`user_id`建立一对一关系，表示卖家用户。
    - 与`shops`表通过`seller_id`建立一对多关系，表示卖家拥有的商店。
-
 8. **`shops`表:**
    - 与`sellers`表通过`seller_id`建立多对一关系，表示商店的卖家。
    - 与`images`表通过`image_id`建立多对一关系，表示商店的图片。
-
 9. **`addresses`表:**
    - 与`customers`表通过`customer_id`建立一对多关系，表示顾客的配送地址。
-
 10. **`images`表:**
     - 与`commodities`表通过`image_id`建立多对一关系，表示商品的图片。
     - 与`shops`表通过`image_id`建立多对一关系，表示商店的图片。
-
 11. **`categories`表:**
     - 与`commodities`表通过`category_id`建立一对多关系，表示商品所属的类别。
-
-12. **`active_storage_attachments`表:**
+12. **`comment`表**
+    * 与`customer`表通过`customer_id`建立多对一关系，表示评论的顾客。
+    * 与`commodities`表通过`commodity_id`建立多对一关系，表示评论的商品。
+13. **`active_storage_attachments`表:**
     - 与`active_storage_blobs`表通过`blob_id`建立多对一关系，表示附件的存储关系。
-
-13. **`active_storage_blobs`表:**
+14. **`active_storage_blobs`表:**
     - 与`active_storage_attachments`表通过`blob_id`建立一对多关系，表示附件的存储关系。
     - 与`active_storage_variant_records`表通过`blob_id`建立一对多关系，表示变体记录与附件的关系。
-
-14. **`active_storage_variant_records`表:**
+15. **`active_storage_variant_records`表:**
     - 与`active_storage_blobs`表通过`blob_id`建立多对一关系，表示变体记录与附件的关系。
 
 ## 实体
@@ -264,6 +254,18 @@ class User < ApplicationRecord
 end
 ```
 
+12. **Comment (评论)**
+    * 保存顾客对商品的评论。
+    * 与一个顾客和商品关联。
+
+```ruby
+class Comment < ApplicationRecord
+  belongs_to :commodity
+  belongs_to :customer
+  validates :text, presence: true
+end
+```
+
 ## 后端逻辑
 
 明白，我将突出设计的重点并将控制器的代码与功能绑定在一起。
@@ -309,6 +311,7 @@ end
   - `destroy` Action：销毁购物车。
 
 ### 6. OrdersController
+
 - **设计重点：** 订单控制器，处理订单的创建、编辑、支付和删除。
 - **功能绑定：** 
   - `index` Action：获取并显示所有订单的信息。
@@ -319,9 +322,17 @@ end
   - `update` Action：更新订单信息，如修改地址或数量。
   - `destroy` Action：删除订单。
 
+### 7. CommentsController
+
+* **设计重点：**评论控制器，处理商品评论的创建和删除。
+* **功能绑定：**
+  * `create` Action: 顾客创建对已完成订单的商品评论。
+  * `destroy` Action: 顾客删除自己对商品的评论。
+
 ### 商家功能
 
-### 7. ShopsController
+### 8. ShopsController
+
 - **设计重点：** 商店控制器，处理商店的创建、编辑和删除。
 - **功能绑定：** 
   - `index` Action：获取并显示当前商家所有商店的信息。
@@ -331,7 +342,8 @@ end
   - `update` Action：更新商店信息。
   - `destroy` Action：尝试删除商店，捕捉外键约束异常，手动删除关联的订单，最后删除商店。
 
-### 8. CommoditiesController
+### 9. CommoditiesController
+
 - **设计重点：** 商品控制器，处理商品的创建、编辑和删除。
 - **功能绑定：** 
   - `index` Action：获取并显示当前商店所有商品的信息。
@@ -344,7 +356,8 @@ end
 
 这样，ShopsController 处理商店相关的逻辑，包括商店的创建、编辑和删除，而 CommoditiesController 处理商品的创建、编辑和删除，同时确保了删除商品时同时删除了关联的订单。
 
-### 9. AddressesController
+### 10. AddressesController
+
 - **设计重点：** 地址控制器，处理顾客的地址信息，包括创建、编辑和删除。
 - **功能绑定：** 
   - `new` Action：允许顾客创建新的收货地址。
@@ -355,7 +368,7 @@ end
 
 ### 管理员功能
 
-### 10. CategoriesController
+### 11. CategoriesController
 
 - **设计重点：** 商品类别控制器，用于管理商品的分类信息，**管理员进行操作。**
 - **功能绑定：**
@@ -367,7 +380,7 @@ end
   - `update` Action：更新商品类别信息。
   - `destroy` Action：删除商品类别。
 
-### 11. AdminsController
+### 12. AdminsController
 
 - **设计重点：** 管理员控制器，负责管理员相关功能。
 - **功能绑定：**

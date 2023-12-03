@@ -35,7 +35,7 @@
         </div>
       <% end %>
       <hr>
-      <% if current_customer? && current_user.customer.orders.map {|order| order.commodity}.include?(@commodity) %>
+      <% if current_customer? && current_user.customer.orders.reject {|order| !order.done}.map {|order| order.commodity}.include?(@commodity) %>
         <%= form_with(model: @comment) do |form| %>
           <% if @comment.errors.any? %>
             <div style="color: red">

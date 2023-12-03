@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :comments
+  resources :comments, only: [ :create, :destroy ]
   root to: "home#index"
   get 'home/index'
   get 'home/about'
