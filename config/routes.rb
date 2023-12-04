@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :user, only: [:index, :show,:update]
 
   resources :sellers do
+    resources :orders
     resources :shops do
       resources :commodities
     end
@@ -24,8 +25,8 @@ Rails.application.routes.draw do
       post 'delete_selected'
     end
     resources :orders
-    #resources :records
   end
+    #resources :records
 
   resources :categories
   resources :admins do

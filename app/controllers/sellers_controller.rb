@@ -58,6 +58,14 @@ class SellersController < ApplicationController
     end
   end
 
+  def shipping_one_order
+    @seller = current_user.seller
+    @orders = @seller.orders
+    @orders = @orders.where(status: STATUS_MAPPING['pending_shipping'])
+    #将订单状态改为已发货
+    redirect_to seller_orders_path(@seller), notice: "订单已发货！"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_seller

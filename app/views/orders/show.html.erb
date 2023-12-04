@@ -1,10 +1,33 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @order %>
-
+<table class="table">
+  <thead>
+  <tr>
+    <th>商品名称</th>
+    <th>数量</th>
+    <th>支付状态</th>
+    <th>总价</th>
+    <th>收货信息</th>
+    <th>创建时间</th>
+    <th>订单状态</th>
+    <!-- Add more headers if needed -->
+  </tr>
+  </thead>
+  <tbody>
+  <%= render @order %>
+  </tbody>
+</table>
+<%if current_seller? && @order.status == 0 %>
+  <%= button_to '立即发货', seller_order_path(current_user.seller,@order), method: :put, data: { confirm: 'Are you sure?' } ,class: "btn btn-primary"%>
+<%end %>
+<%if current_customer? && @order.status == 1 %>
+  <%= button_to '确认收货', customer_order_path(current_user.customer,@order), method: :put, data: { confirm: 'Are you sure?' },class: "btn btn-primary" %>
+<%end %>
+<%if current_customer? && @order.status == 2 %>
+  <%= link_to '评价', seller_shop_commodity_path(@order.commodity.seller,@order.commodity.shop,@order.commodity),class: "btn btn-danger"%>
+<%end %>
+<hr/>
 <div>
-  <%= link_to "Edit this order", edit_customer_order_path(@customer,@order) ,class: "btn btn-secondary"%> |
-  <%= link_to "Back to orders", customer_orders_path(@customer),class: "btn btn-primary" %>
+<!--  <%#= link_to "Edit this @order", edit_customer_order_path(@customer,@@order) ,class: "btn btn-secondary"%> |-->
+  <%= link_to '返回',:back,class: "btn btn-secondary" %>
 
-  <%= button_to "Destroy this order", customer_order_path(@customer,@order), method: :delete,class: "btn btn-primary"%>
+  <%#= button_to "Destroy this @order", customer_order_path(@customer,@@order), method: :delete,class: "btn btn-primary"%>
 </div>

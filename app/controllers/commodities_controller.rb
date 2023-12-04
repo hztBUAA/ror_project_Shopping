@@ -12,6 +12,7 @@ class CommoditiesController < ApplicationController
   # GET /commodities/1 or /commodities/1.json
   def show
     @comment = Comment.new
+
   end
 
   # GET /commodities/new

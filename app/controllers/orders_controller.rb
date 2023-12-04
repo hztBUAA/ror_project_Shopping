@@ -4,14 +4,32 @@ class OrdersController < ApplicationController
   # before_action :set_customer
   # before_action :set_commodity ,except: %i[ create index index]
   # GET /orders or /orders.json
+  STATUS_MAPPING = {
+      'pending_purchase' => 3,
+      'pending_shipping' => 0,
+      'pending_delivery' => 1,
+      'pending_review' => 2
+    }.freeze
   def index
     @orders = Order.all
-    @customer = current_user.customer
+    if current_seller?
+      @seller = current_user.seller
+      @orders = @seller.orders
+      @pending_shipping_orders = @orders.where(status: STATUS_MAPPING['pending_shipping'])
+    elsif current_customer?
+      @customer = current_user.customer
+      customer_id = params[:customer_id]
+      @pending_purchase_orders = Order.where(status: 3, customer_id: customer_id)
+      @pending_shipping_orders = Order.where(status: 0, customer_id: customer_id)
+      @pending_delivery_orders = Order.where(status: 1, customer_id: customer_id)
+      @pending_review_orders = Order.where(status: 2, customer_id: customer_id)
+    end
   end
 
   # GET /orders/1 or /orders/1.json
   def show
 @order = Order.find(params[:id])
+# debugger
 @customer = current_user.customer
   end
 
@@ -27,6 +45,7 @@ class OrdersController < ApplicationController
     @order = Order.new
     @order.commodity_id = @commodity.id
     @order.done = @done
+    @price = @commodity.price
   end
 
   # GET /orders/1/edit
@@ -60,8 +79,7 @@ class OrdersController < ApplicationController
 
     @commodity = Commodity.find(params[:order][:commodity_id])
     @balance = @customer.user.balance
-    if @order.done == true
-
+    if @order.done == true#订单已经支付
       if @commodity.count>=1 && @balance>=@commodity.price
         @commodity.sales = @commodity.sales+1
         @commodity.count = @commodity.count-1
@@ -69,19 +87,21 @@ class OrdersController < ApplicationController
         @customer.user.balance = @balance
         @commodity.save
         @customer.user.save
-
+        @order.status = STATUS_MAPPING['pending_shipping']
         # redirect_to "home/index"
       else
-        if @commodity.count<1
+        if @commodity.count<1|| @commodity.count < @order.count
           redirect_to customers_commodities_path, notice: "购买失败！商品已经被人抢光啦！." and return
         else
           redirect_to customers_commodities_path, notice: "余额不足！" and return
         end
       end
+    else
+      @order.status = STATUS_MAPPING['pending_purchase']
     end
+
     respond_to do |format|
       if @order.save
-
         format.html { redirect_to customers_commodities_path(@customer), notice: @order.done ? "支付成功！" : "订单创建成功，可在购物车中查询您的宝贝。" and return}
         format.json { render :index, status: :created, location: @order }
       else
@@ -93,14 +113,23 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1 or /orders/1.json
   def update
-    respond_to do |format|
-      if @order.update(permit_params)
-        format.html { redirect_to customer_order_path(@customer,@order), notice: "订单更新成功！" }
-        format.json { render :index, status: :ok, location: @order }
+    @order = Order.find(params[:id])
+    if current_seller?
+      if @order.status == STATUS_MAPPING['pending_shipping']
+        @order.status = STATUS_MAPPING['pending_delivery']
+        @order.save
+        redirect_to seller_orders_path(current_user.seller), notice: "订单已发货成功，预计顾客将在3个工作日内收到商品！"
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        redirect_to seller_orders_path(current_user.seller), :alert => "订单发货失败！"
       end
+    elsif current_customer?
+           if @order.status == STATUS_MAPPING['pending_delivery']
+             @order.status = STATUS_MAPPING['pending_review']
+             @order.save
+             redirect_to customer_orders_path(current_user.customer), notice: "您已确认收货，可以对本商品进行评价哦~！"
+           else
+             redirect_to customer_orders_path(current_user.customer), :alert => "订单确认失败，请联系管理员！"
+           end
     end
   end
 
@@ -113,12 +142,26 @@ class OrdersController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def address_params
+  def load_orders
+    category = params[:category]
+    status_mapping = {
+      'pending-shipping' => 0,    # Adjust the values based on your actual status values
+      'pending-delivery' => 1,
+      'pending-review' => 2
+    }
 
+    status = status_mapping[category]
+    # debugger
+    @orders = Order.where(status: status)
+
+    render partial: 'orders/order', collection: @orders, as: :order
+  end
+
+  def address_params
     params.require(:order).require(:address).permit(:street, :city, :country, :house_address, :phone_number, :greeting_name)
   end
 
   def order_params
-    params.require(:order).permit(:address_id, :count, :customer_id, :commodity_id, :done)
+    params.require(:order).permit(:address_id, :count, :customer_id, :commodity_id, :done,:category)
   end
 end

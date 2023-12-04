@@ -27,6 +27,8 @@ class CustomersController < ApplicationController
         @address = current_user.customer.addresses.first
       end
       @order = Order.new
+      # debugger
+      @price = @commodity.price
     end
   def add_to_my_cart
     # @customer.cart

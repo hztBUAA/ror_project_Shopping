@@ -1,22 +1,19 @@
 <div id="<%= dom_id order %>">
 
     <!--  显示商品的信息-->
-    <div class="card" style="width: 18rem;display: flex">
-      <div class="card-body">
-        <h4 class="card-title"><%= order.commodity.commodity_name %></h4>
-<!--        <h5 class="card-subtitle mb-2 text-body-secondary"><%#= order.address %></h5>-->
-        <h6 class="card-text"><strong>数量</strong>：<%= order.count %></h6>
-        <h6 class="card-text"><strong>支付状态</strong>：<%= order.done %></h6>
-        <h6 class="card-text"><strong>总价</strong>：￥<%= order.count * order.commodity.price %></h6>
-        <h6 class="card-text"><strong>收货信息</strong>：<%= order.address.full_address %></h6>
-        <p class="card-text"><strong>创建时间：</strong><%= order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
-        <p class="card-text"><strong>订单状态：</strong><%= order.done == true ? "已支付" : "待支付"%></p>
-        <!--        <h6 class="card-text"><strong>库存</strong>：<%#= commodity.count %></h6>-->
-        <%#=link_to "加入购物车", new_customer_order_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:false),class: "btn btn-primary"%>
-        <%#=link_to "购买", customer_purchase_path(customer_id: current_user.customer.id,commodity_id: commodity.id,done:true),class: "btn btn-primary"%>
-      </div>
-    </div>
+
+  <tr style="cursor: pointer;">
+    <td><%= link_to order.commodity.commodity_name, current_seller? ? seller_order_path(current_user.seller,order) : customer_order_path(current_user.customer,order),style: "text-decoration: none;" %></td>
+    <td><%= order.count %></td>
+    <td><%= order.done %></td>
+    <td>￥<%= order.count * order.commodity.price %></td>
+    <td><%= order.address.full_address %></td>
+    <td><%= order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+    <td><%= order.done ? "已支付" : "待支付" %></td>
+    <!-- Add more columns if needed -->
+  </tr>
 
 
+<hr/>
 
 </div>

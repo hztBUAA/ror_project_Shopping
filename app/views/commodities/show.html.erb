@@ -1,4 +1,15 @@
 <div class="container-fluid">
+  <% if @comment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% @comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="d-flex">
     <div class="col">
       <%= render @commodity %>
@@ -7,7 +18,9 @@
         <%= link_to "编辑信息", edit_seller_shop_commodity_path(@seller,@shop,@commodity) ,class: "btn btn-primary"%>
           <%= link_to "不再供应", seller_shop_commodity_path(@seller,@shop,@commodity), method: :delete,class: "btn btn-primary", confirm: "Are you sure?" %>
         <%end %>
+        <%unless @seller.nil? || @shop.nil? %>
           <%= link_to "Back to commodities", seller_shop_commodities_path(@seller,@shop),class: "btn btn-primary"%>
+        <%end %>
       </div>
     </div>
     <div class="col">
@@ -37,17 +50,6 @@
       <hr>
       <% if current_customer? && current_user.customer.orders.reject {|order| !order.done}.map {|order| order.commodity}.include?(@commodity) %>
         <%= form_with(model: @comment) do |form| %>
-          <% if @comment.errors.any? %>
-            <div style="color: red">
-              <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-              <ul>
-                <% @comment.errors.each do |error| %>
-                  <li><%= error.full_message %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
           <%= form.hidden_field :customer_id, value: current_user.customer.id %>
           <%= form.hidden_field :commodity_id, value: @commodity.id %>
           <%= form.text_field :text, class: "form-control" %>

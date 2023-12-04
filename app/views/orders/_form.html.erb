@@ -10,7 +10,13 @@
       </ul>
     </div>
   <% end %>
-
+  <!-- 显示商品图片 -->
+  <div class="mb-3">
+    <%#= form.label :image, class: "form-label" %>
+    <%= image_tag @commodity&.image, class: "img-fluid", alt: "Commodity Image" %>
+  </div>
+  <!-- 显示商品名字 -->
+  <h2><%= @commodity.commodity_name %></h2>
   <% if current_customer? && current_user.customer.addresses.present? %>
     <!-- 如果有地址，显示下拉列表 -->
     <div class="form-group">
@@ -53,15 +59,21 @@
   <% end %>
 
 
+
+
+
+  <!-- 显示商品数量 -->
   <div class="mb-3">
-    <%= form.label :count , class: "form-label"%>
-    <%= form.number_field :count , class: "form-control", id: "countField",placeholder: "购买数量"%>
+    <%= form.label :count, class: "form-label" %>
+    <%= form.number_field :count, class: "form-control", id: "countField" %>
   </div>
 
+  <!-- 显示商品价格 -->
   <div class="mb-3">
-    <%= form.label :price , class: "form-label"%>
-    <%= form.text_field :price , class: "form-control form-control-textarea", id: "displayTotalPrice", disabled: true, data: { price: @price } %>
+    <%= form.label :price, class: "form-label" %>
+    <%= form.text_field :price, value: "￥" + @price.to_s, class: "form-control form-control-textarea", id: "displayTotalPrice", disabled: true %>
   </div>
+
 
 
   <%= form.hidden_field :customer_id, value: params[:customer_id] %>
@@ -77,23 +89,13 @@
   </div>
 <% end %>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // 获取count和price字段的元素
-    let countField = document.getElementById('countField');
-
-    // 获取用于显示的元素
-    let displayTotalPrice = document.getElementById('displayTotalPrice');
-
-    // 添加事件监听器
-    countField.addEventListener('input', updateTotal);
-
-    // 更新总价显示
-    function updateTotal() {
-        let count = parseInt(countField.value) || 0; // 确保输入是数字
-        let price = parseFloat(displayTotalPrice.dataset.price) || 0;
-        // 计算总价
-        let total = count * price;
-        // 更新显示
-        displayTotalPrice.textContent = total.toFixed(2); // 保留两位小数
-    }
+    jQuery(document).ready(function($) {
+        $('#countField').on('input', function() {
+            var count = $(this).val();
+            var totalPrice = count * <%= @price %>;
+            $('#displayTotalPrice').val("￥" + totalPrice.toFixed(2));
+        });
+    });
 </script>

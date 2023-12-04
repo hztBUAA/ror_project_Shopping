@@ -1,12 +1,116 @@
+<!-- app/views/orders/index.html.erb -->
+
 <h1>所有订单</h1>
-
-<div id="orders">
-  <% @orders.each do |order| %>
-    <%= render order %>
-    <p>
-      <%= link_to "进入", customer_order_path(@customer,order),class: "btn btn-primary"%>
-    </p>
+<%if current_customer?%>
+<h2>待支付</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>商品名称</th>
+    <th>数量</th>
+    <th>支付状态</th>
+    <th>总价</th>
+    <th>收货信息</th>
+    <th>创建时间</th>
+    <th>订单状态</th>
+    <!-- Add more headers if needed -->
+  </tr>
+  </thead>
+  <tbody>
+<% if @pending_purchase_orders.any? %>
+  <% @pending_purchase_orders.each do |order| %>
+    <%=render order %>
   <% end %>
-</div>
+<% else %>
+    <tr>
+      <td colspan="7">没有相关订单哦</td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<%end %>
+<!-- 待发货订单 -->
+<h2>待发货</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>商品名称</th>
+    <th>数量</th>
+    <th>支付状态</th>
+    <th>总价</th>
+    <th>收货信息</th>
+    <th>创建时间</th>
+    <th>订单状态</th>
+    <!-- Add more headers if needed -->
+  </tr>
+  </thead>
+  <tbody>
+  <% if @pending_shipping_orders.any? %>
+    <% @pending_shipping_orders.each do |order| %>
+      <%=render order %>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="7">没有相关订单哦</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<%#= link_to "New order", new_customer_order_path(@customer,commodity_id: ) %>
+<%if current_customer? %>
+<!-- 待收货订单 -->
+<h2>待收货</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>商品名称</th>
+    <th>数量</th>
+    <th>支付状态</th>
+    <th>总价</th>
+    <th>收货信息</th>
+    <th>创建时间</th>
+    <th>订单状态</th>
+    <!-- Add more headers if needed -->
+  </tr>
+  </thead>
+  <tbody>
+  <% if @pending_delivery_orders.any? %>
+    <% @pending_delivery_orders.each do |order| %>
+      <%=render order %>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="7">没有相关订单哦</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<!-- 待评价订单 -->
+<h2>待评价</h2>
+<table class="table">
+  <thead>
+  <tr>
+    <th>商品名称</th>
+    <th>数量</th>
+    <th>支付状态</th>
+    <th>总价</th>
+    <th>收货信息</th>
+    <th>创建时间</th>
+    <th>订单状态</th>
+    <!-- Add more headers if needed -->
+  </tr>
+  </thead>
+  <tbody>
+  <% if @pending_review_orders.any? %>
+    <% @pending_review_orders.each do |order| %>
+      <%=render order %>
+    <% end %>
+  <% else %>
+    <tr>
+      <td colspan="7">没有相关订单哦</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%end %>
+

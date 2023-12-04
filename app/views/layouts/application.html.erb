@@ -78,6 +78,10 @@
               <!--            商城就是所有卖家的index  index显示他们的所有商店-->
               <%= link_to '我的店铺', seller_shops_path(current_user.seller), class: "nav-link#{" active" if controller_name == "sellers"}" %>
             </li>
+            <li class="nav-item">
+              <!--            商城就是所有卖家的index  index显示他们的所有商店-->
+              <%= link_to '我的交易', seller_orders_path(current_user.seller), class: "nav-link#{" active" if controller_name == "sellers"}" %>
+            </li>
 <!--         #############   管理员部分 #########-->
           <% elsif current_user && current_user.role == "admin" %>
             <li class="nav-item">
@@ -117,6 +121,7 @@
               <%end %>
           </a>
           <ul class="dropdown-menu">
+            <li><%= link_to '我的订单', customer_orders_path(current_user.customer.id), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
             <li><%= link_to '个人信息', customer_path(current_user.customer.id), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
             <li><%= link_to '收货地址', customer_addresses_path(current_user.customer), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
             <li><%= link_to '充值', recharge_customer_path(current_user.id), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>

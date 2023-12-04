@@ -11,7 +11,13 @@
     </div>
   <% end %>
 
-
+  <!-- 显示商品图片 -->
+  <div class="mb-3">
+    <%#= form.label :image, class: "form-label" %>
+    <%= image_tag @commodity&.image, class: "img-fluid", alt: "Commodity Image" %>
+  </div>
+  <!-- 显示商品名字 -->
+  <h2><%= @commodity.commodity_name %></h2>
     <!-- 如果有地址，显示下拉列表 -->
     <div class="form-group">
       <%= form.label :address, "选择地址" %>
@@ -26,7 +32,7 @@
 
   <div class="mb-3">
     <%= form.label :price , class: "form-label"%>
-    <%= form.text_field :price , class: "form-control form-control-textarea", id: "displayTotalPrice", disabled: true, data: { price: @price } %>
+    <%= form.text_field :price , value: "￥"+@price.to_s, class: "form-control ", id: "displayTotalPrice", disabled: true %>
   </div>
 
 
@@ -42,3 +48,14 @@
     <%= form.submit "确认", class: "btn btn-primary"%>
   </div>
 <% end %>
+<!-- 在你的视图文件底部添加以下 JavaScript 代码 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    jQuery(document).ready(function($) {
+        $('#countField').on('input', function() {
+            var count = $(this).val();
+            var totalPrice = count * <%= @price %>;
+            $('#displayTotalPrice').val("￥" + totalPrice.toFixed(2));
+        });
+    });
+</script>
