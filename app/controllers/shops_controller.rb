@@ -107,6 +107,6 @@ class ShopsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def shop_params
-      params.require(:shop).permit(:shop_name, :info )
+      params.require(:shop).permit(:shop_name, :info, :image)
     end
 end

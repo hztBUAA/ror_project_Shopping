@@ -58,6 +58,10 @@
     <%= form.label :info , class: "form-label"%>
     <%= form.text_area :info , class: "form-control form-control-textarea"%>
   </div>
+  <div class="mb-3">
+    <%= form.label :shop_image, class: "form-label" %>
+    <%= form.file_field :image, class: "form-control " %>
+  </div>
     <div class="mb-3">
     <%= form.submit "确认", class: "btn btn-primary" %>
     </div>
