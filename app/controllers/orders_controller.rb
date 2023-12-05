@@ -80,10 +80,10 @@ class OrdersController < ApplicationController
     @commodity = Commodity.find(params[:order][:commodity_id])
     @balance = @customer.user.balance
     if @order.done == true#订单已经支付
-      if @commodity.count>=1 && @balance>=@commodity.price
-        @commodity.sales = @commodity.sales+1
-        @commodity.count = @commodity.count-1
-        @balance = @balance - @commodity.price
+      if @commodity.count>=@order.count && @balance>=@commodity.price*@order.count
+        @commodity.sales = @commodity.sales+@order.count
+        @commodity.count = @commodity.count-@order.count
+        @balance = @balance - @commodity.price*@order.count
         @customer.user.balance = @balance
         @commodity.save
         @customer.user.save
