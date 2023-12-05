@@ -5,12 +5,12 @@
 
   <div class="mb-3">
     <%= f.label :role, class: "form-label" %>
-    <%= f.select :role, User.roles.keys, class: "form-select" %>
+    <%= f.select :role, User.roles.keys, class: "form-select", required: true %>
   </div>
 
   <div class="mb-3">
     <%= f.label :user_name, class: "form-label" %>
-    <%= f.text_field :user_name, autofocus: true, autocomplete: "user_name", class: "form-control" %>
+    <%= f.text_field :user_name, autofocus: true, autocomplete: "user_name", class: "form-control", required: true %>
   </div>
 
   <div class="mb-3">
@@ -18,12 +18,12 @@
     <% if @minimum_password_length %>
       <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control", required: true, minlength: 6, placeholder: "至少6个字符" %>
   </div>
 
   <div class="mb-3">
     <%= f.label :password_confirmation, class: "form-label" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", required: true %>
   </div>
 
   <div class="mb-3">

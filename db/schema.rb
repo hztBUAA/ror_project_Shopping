@@ -127,7 +127,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_055328) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "cart_id"
-    t.integer "address_id", null: false
+    t.integer "address_id"
     t.integer "status", default: 0
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["cart_id"], name: "index_orders_on_cart_id"
@@ -148,8 +148,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_055328) do
     t.integer "seller_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "image_id"
-    t.index ["image_id"], name: "index_shops_on_image_id"
     t.index ["seller_id"], name: "index_shops_on_seller_id"
   end
 
@@ -166,10 +164,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_04_055328) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", null: false
-    t.integer "image_id"
     t.string "last_sign_in_ip"
     t.string "current_sign_in_ip"
-    t.index ["image_id"], name: "index_users_on_image_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end

@@ -16,29 +16,29 @@
 
   <div class="mb-3">
     <%= form.label :commodity_name , class: "form-label"%>
-    <%= form.text_field :commodity_name , class: "form-control"%>
+    <%= form.text_field :commodity_name , class: "form-control", required: true%>
   </div>
   <div class="mb-3">
     <%= form.label :category_id, class: "form-label" %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "请选择商品种类" }, class: "form-control" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "请选择商品种类" }, class: "form-control", required: true %>
   </div>
   <div class="mb-3">
     <%= form.label :count, class: "form-label" %>
-    <%= form.number_field :count, class: "form-control", in: 0..100, step: 1 %>
+    <%= form.number_field :count, class: "form-control", in: 0..100, step: 1, required: true %>
   </div>
 
   <div class="mb-3">
     <%= form.label :price , class: "form-label"%>
-    <%= form.text_field :price , class: "form-control form-control-textarea"%>
+    <%= form.text_field :price , class: "form-control form-control-textarea", required: true%>
   </div>
   <div class="mb-3">
     <%= form.label :info , class: "form-label"%>
-    <%= form.text_area :info , class: "form-control form-control-textarea"%>
+    <%= form.text_area :info , class: "form-control form-control-textarea", required: true%>
   </div>
 
   <div class="field">
     <%= form.label :image %>
-    <%= form.file_field :image %>
+    <%= form.file_field :image, required: true %>
   </div>
 
 <!--  <div class="mb-3">-->
