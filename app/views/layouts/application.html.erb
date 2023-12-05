@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Shopping Paradise By hzt </title>
+  <title>嗨购一下</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -122,7 +122,6 @@
           </a>
           <ul class="dropdown-menu">
             <li><%= link_to '我的订单', customer_orders_path(current_user.customer.id), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
-            <li><%= link_to '个人信息', customer_path(current_user.customer.id), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
             <li><%= link_to '收货地址', customer_addresses_path(current_user.customer), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
             <li><%= link_to '充值', recharge_customer_path(current_user.id), class: "dropdown-item clickable", style: "color: #1b1e21; background-color: transparent;" %><span class="sr-only"></span></li>
           </ul>
@@ -153,13 +152,13 @@
   <% if notice%>
     <div style= "margin: 0" class="alert alert-success alert-dismissible fade show" role="alert">
       <div class="notice  alert-success"  ><%= notice %></div>
-      <input type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></input>
+      <input type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
     </div>
   <%end %>
   <%if alert %>
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <div class="notice  alert-success"  ><%= alert %></div>
-      <input type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></input>
+      <input type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
     </div>
   <%end %>
 
@@ -171,7 +170,7 @@
 
   <footer class="py-5">
     <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-      <p>Copyright hzt &copy; 2023. All rights reserved.</p>
+      <p>Copyright 嗨购 &copy; 2023. All rights reserved.</p>
     </div>
   </footer>
 </div>

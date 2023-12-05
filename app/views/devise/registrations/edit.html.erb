@@ -15,7 +15,7 @@
 
   <div class="mb-3">
     <%= f.label :password, class: "form-label" %> <i>(留空表示不修改密码)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control", minlength: 6 %>
     <% if @minimum_password_length %>
       <br />
       <em><%= @minimum_password_length %>字符以上</em>
@@ -39,7 +39,7 @@
 
   <div class="mb-3">
     <%= f.label :current_password, class: "form-label" %> <i>(需要输入当前密码以确认更改)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", required: true %>
   </div>
 
   <div class="mb-3">

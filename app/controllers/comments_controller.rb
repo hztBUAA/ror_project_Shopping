@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    debugger
+    # debugger
     @comment = Comment.new(comment_params)
     @commodity = @comment.commodity
 

@@ -14,7 +14,9 @@
   <!-- 显示商品图片 -->
   <div class="mb-3">
     <%#= form.label :image, class: "form-label" %>
-    <%= image_tag @commodity&.image, class: "img-fluid", alt: "Commodity Image" %>
+    <% if @commodity.image.attached? %>
+      <%= image_tag @commodity&.image, class: "img-fluid", alt: "Commodity Image" %>
+    <% end %>
   </div>
   <!-- 显示商品名字 -->
   <h2><%= @commodity.commodity_name %></h2>
