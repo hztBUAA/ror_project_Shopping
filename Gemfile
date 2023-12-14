@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem "mysql2"
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
@@ -74,7 +75,7 @@ end
 
 group :production do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "pg"
+  # gem "pg"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
